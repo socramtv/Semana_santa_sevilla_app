@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana Santa Sevilla 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;600&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --burgundy: #6B1B2A;
+    --burgundy-dark: #3D0D17;
+    --burgundy-light: #8B2D3F;
+    --cream: #F5EDD8;
+    --cream-dark: #E8D9B8;
+    --ink: #1A0A0E;
+    --text-muted: #7A5C4E;
+  }
+
+  body {
+    background: #2A1008;
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 0 0 0 0;
+    margin: 0;
+  }
+
+  .app {
+    max-width: 420px;
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--gold);
+    border-radius: 0;
+    overflow: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .app-header {
+    background: var(--burgundy-dark);
+    padding: 18px 20px 14px;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+  }
+
+  .header-ornament {
+    font-family: 'Old English Text MT', 'UnifrakturCook', cursive;
+    color: var(--gold-light);
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .app-title {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    opacity: 0.9;
+  }
+
+  .app-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-top: 4px;
+    opacity: 0.7;
+    text-transform: uppercase;
+  }
+
+  .year-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: var(--gold);
+    color: var(--burgundy-dark);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  .nav-tabs { display: none; }
+
+  /* ── MENÚ DESPLEGABLE EN CABECERA ── */
+  .top-menu-bar {
+    background: var(--burgundy);
+    border-bottom: 1.5px solid var(--gold-dark);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    height: 44px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  .top-menu-active-label {
+    flex: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .top-menu-active-icon { font-size: 16px; line-height: 1; }
+
+  .top-menu-toggle {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: var(--gold);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .top-menu-toggle:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  .top-menu-toggle .chevron { transition: transform 0.2s; font-style: normal; font-size: 10px; }
+  .top-menu-toggle.open .chevron { transform: rotate(180deg); }
+
+  .top-menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    background: var(--burgundy-dark);
+    border-bottom: 2px solid var(--gold-dark);
+    z-index: 998;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .top-menu-dropdown.open { display: block; }
+
+  .dropdown-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
+
+  .dropdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 4px 10px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-right: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: all 0.15s;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.55);
+    line-height: 1.3;
+    gap: 4px;
+  }
+  .dropdown-item:nth-child(5n) { border-right: none; }
+  .dropdown-item:hover { background: rgba(201,168,76,0.08); color: var(--gold); }
+  .dropdown-item.active { background: rgba(201,168,76,0.12); color: var(--gold-light); border-bottom: 2px solid var(--gold); }
+  .dropdown-item .d-icon { font-size: 20px; line-height: 1; }
+
+  .content { padding: 0; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ITINERARIO */
+  .day-selector {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 14px;
+    gap: 8px;
+    background: var(--cream-dark);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    scrollbar-width: none;
+  }
+  .day-selector::-webkit-scrollbar { display: none; }
+
+  .day-btn {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--gold-dark);
+    border-radius: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .day-btn .d-name { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; display: block; }
+  .day-btn .d-date { font-size: 14px; font-weight: 600; display: block; }
+
+  .day-btn.active {
+    background: var(--burgundy);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .cofradias-list { padding: 10px 14px; }
+
+  .cofradia-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cofradia-card:last-child { border-bottom: none; }
+  .cofradia-card:hover { padding-left: 4px; }
+
+  .cofradia-hora {
+    min-width: 44px;
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .cofradia-color {
+    width: 4px;
+    min-height: 40px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .cofradia-info { flex: 1; }
+
+  .cofradia-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .cofradia-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .cofradia-status {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .status-en-calle { background: rgba(107,27,42,0.12); color: var(--burgundy); border: 1px solid rgba(107,27,42,0.3); }
+  .status-pendiente { background: rgba(201,168,76,0.12); color: var(--gold-dark); border: 1px solid rgba(201,168,76,0.4); }
+  .status-recogida { background: rgba(120,120,120,0.1); color: var(--text-muted); border: 1px solid rgba(120,120,120,0.2); }
+
+  /* RADIO Y TV */
+  .media-section { padding: 14px; }
+
+  .media-group-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .media-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: white;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .media-card:hover { border-color: var(--gold); }
+  .media-card.playing { border-color: var(--burgundy); background: rgba(107,27,42,0.04); }
+
+  .media-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .media-info { flex: 1; }
+
+  .media-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .media-desc { font-size: 12px; color: var(--text-muted); }
+
+  .play-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--gold-dark);
+    font-size: 12px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .play-btn:hover, .media-card.playing .play-btn {
+    background: var(--burgundy);
+    border-color: var(--burgundy);
+    color: var(--gold-light);
+  }
+
+  .now-playing-bar {
+    margin: 12px 0 0;
+    background: var(--burgundy-dark);
+    border: 1px solid var(--gold-dark);
+    border-radius: 3px;
+    padding: 10px 14px;
+    display: none;
+  }
+  .now-playing-bar.visible { display: flex; align-items: center; gap: 10px; }
+
+  .np-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: 0.7; display: block; }
+  .np-name { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--gold-light); }
+  .np-wave { display: flex; gap: 2px; align-items: flex-end; margin-left: auto; }
+  .np-bar {
+    width: 3px;
+    background: var(--gold);
+    border-radius: 1px;
+    animation: wave 0.8s ease-in-out infinite alternate;
+  }
+  .np-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+  .np-bar:nth-child(2) { height: 14px; animation-delay: 0.15s; }
+  .np-bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+  .np-bar:nth-child(4) { height: 16px; animation-delay: 0.1s; }
+  .np-bar:nth-child(5) { height: 7px; animation-delay: 0.25s; }
+
+  @keyframes wave {
+    from { transform: scaleY(0.4); }
+    to { transform: scaleY(1); }
+  }
+
+  /* RECORRIDOS */
+  .recorrido-section { padding: 14px; }
+
+  .cofradia-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 3px;
+    background: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238B6914' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+  }
+
+  .mapa-container {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mapa-svg { width: 100%; display: block; }
+
+  .recorrido-info {
+    padding: 12px;
+    background: rgba(107,27,42,0.04);
+    border-top: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .recorrido-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--burgundy); font-weight: 600; display: block; }
+  .stat-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+
+  .ornament-divider {
+    text-align: center;
+    color: var(--gold);
+    font-size: 14px;
+    padding: 4px 0;
+    opacity: 0.6;
+    letter-spacing: 8px;
+  }
+
+  .paso-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .paso-item:last-child { border-bottom: none; }
+  .paso-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--burgundy);
+    color: var(--gold-light);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .paso-hora { color: var(--gold-dark); font-size: 12px; font-weight: 600; min-width: 38px; }
+  .paso-lugar { flex: 1; }
+  .paso-live {
+    font-size: 9px;
+    background: rgba(107,27,42,0.85);
+    color: var(--gold-light);
+    padding: 2px 6px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    animation: pulse-live 2s infinite;
+  }
+
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* TIEMPO */
+  .tiempo-section { padding: 14px; }
+
+  .tiempo-actual {
+    background: var(--burgundy-dark);
+    border: 1px solid var(--gold-dark);
+    border-radius: 3px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .tiempo-icon-big { font-size: 44px; line-height: 1; }
+
+  .tiempo-actual-info { flex: 1; }
+
+  .tiempo-temp-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--gold-light);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .tiempo-ciudad {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  .tiempo-desc {
+    font-size: 13px;
+    color: rgba(232,201,122,0.8);
+    margin-top: 2px;
+  }
+
+  .tiempo-alerta {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 3px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--gold-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .forecast-day {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 3px;
+    padding: 8px 4px;
+    text-align: center;
+  }
+
+  .fc-dia { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+  .fc-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .fc-temp { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--burgundy); font-weight: 600; display: block; }
+  .fc-lluvia { font-size: 10px; color: #4A7AB5; display: block; margin-top: 2px; }
+
+  .cofradias-riesgo-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .riesgo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    font-size: 13px;
+  }
+  .riesgo-item:last-child { border-bottom: none; }
+  .riesgo-nombre { flex: 1; color: var(--ink); font-family: 'Playfair Display', serif; }
+  .riesgo-hora { font-size: 11px; color: var(--text-muted); min-width: 38px; }
+  .riesgo-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  .riesgo-bajo { background: rgba(46,126,78,0.1); color: #2E7A4E; border: 1px solid rgba(46,126,78,0.3); }
+  .riesgo-medio { background: rgba(201,168,76,0.15); color: var(--gold-dark); border: 1px solid rgba(201,168,76,0.4); }
+  .riesgo-alto { background: rgba(107,27,42,0.1); color: var(--burgundy); border: 1px solid rgba(107,27,42,0.3); }
+
+  /* PDFs / Revistas */
+  .pdf-section { padding: 14px; }
+
+  .pdf-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .pdf-card.active { border-color: var(--burgundy); }
+  .pdf-card:hover { border-color: var(--gold); }
+
+  .pdf-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    cursor: pointer;
+  }
+
+  .pdf-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 3px;
+    background: var(--burgundy-dark);
+    border: 1px solid var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .pdf-info { flex: 1; }
+  .pdf-name { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .pdf-desc { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+  .pdf-toggle {
+    font-size: 14px;
+    color: var(--gold-dark);
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: transform 0.25s;
+    line-height: 1;
+  }
+  .pdf-card.active .pdf-toggle { transform: rotate(180deg); }
+
+  .pdf-viewer { display: none; border-top: 1px solid rgba(201,168,76,0.2); }
+  .pdf-card.active .pdf-viewer { display: block; }
+  .pdf-viewer iframe { width: 100%; height: 460px; border: none; display: block; }
+
+  /* VOCABULARIO */
+  .vocab-section { padding: 14px; }
+
+  .vocab-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 3px;
+    background: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .vocab-search:focus { outline: none; border-color: var(--burgundy); }
+  .vocab-search::placeholder { color: var(--text-muted); font-style: italic; }
+
+  .vocab-cats {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 8px 0 10px;
+    scrollbar-width: none;
+  }
+  .vocab-cats::-webkit-scrollbar { display: none; }
+
+  .vocab-cat-btn {
+    flex-shrink: 0;
+    padding: 4px 12px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 20px;
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .vocab-cat-btn.active {
+    background: var(--burgundy);
+    border-color: var(--burgundy);
+    color: var(--gold-light);
+  }
+
+  .vocab-count {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .vocab-item {
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  .vocab-item:last-child { border-bottom: none; }
+
+  .vocab-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .vocab-term {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--burgundy);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .vocab-cat-tag {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 1px 7px;
+    border-radius: 2px;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-dark);
+    background: rgba(201,168,76,0.08);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .vocab-def {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .vocab-extra {
+    display: none;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    font-style: italic;
+    line-height: 1.5;
+    border-left: 2px solid var(--gold);
+    padding-left: 10px;
+  }
+  .vocab-item.open .vocab-extra { display: block; }
+  .vocab-item.open .vocab-term { color: var(--burgundy-dark); }
+
+  .vocab-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 14px;
+    padding: 30px 0;
+  }
+
+  /* YOUTUBE */
+  .yt-section { padding: 14px; }
+
+  .yt-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 3px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .yt-card:hover { border-color: var(--gold); }
+
+  .yt-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+  }
+
+  .yt-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .yt-info { flex: 1; }
+  .yt-name { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .yt-desc { font-size: 11px; color: var(--text-muted); }
+
+  .yt-open-btn {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--gold-dark);
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .yt-open-btn:hover { background: var(--burgundy); border-color: var(--burgundy); color: var(--gold-light); }
+
+  .yt-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: #000;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .yt-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .yt-toggle-btn {
+    width: 100%;
+    padding: 8px;
+    background: rgba(107,27,42,0.06);
+    border: none;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .yt-toggle-btn:hover { background: rgba(107,27,42,0.12); }
+
+  /* ── ALERTAS ── */
+  .alertas-section { padding: 14px; }
+  .alerta-banner {
+    border-radius: 3px; padding: 12px 14px; margin-bottom: 10px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .alerta-banner.danger { background: rgba(183,28,28,0.1); border: 1px solid rgba(183,28,28,0.35); }
+  .alerta-banner.warning { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.4); }
+  .alerta-banner.ok { background: rgba(46,126,78,0.1); border: 1px solid rgba(46,126,78,0.3); }
+  .alerta-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+  .alerta-body { flex: 1; }
+  .alerta-title { font-family: 'Playfair Display', serif; font-size: 14px; margin-bottom: 3px; }
+  .alerta-banner.danger .alerta-title { color: #B71C1C; }
+  .alerta-banner.warning .alerta-title { color: var(--gold-dark); }
+  .alerta-banner.ok .alerta-title { color: #2E7A4E; }
+  .alerta-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .alerta-time { font-size: 10px; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.5px; }
+  .suspension-card {
+    background: white; border: 1.5px solid rgba(183,28,28,0.3); border-radius: 3px;
+    padding: 12px 14px; margin-bottom: 8px;
+  }
+  .suspension-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #B71C1C; }
+  .suspension-detail { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .estado-ok {
+    background: rgba(46,126,78,0.08); border: 1px solid rgba(46,126,78,0.25);
+    border-radius: 3px; padding: 14px; text-align: center; margin-top: 8px;
+  }
+  .estado-ok-text { font-family: 'Playfair Display', serif; font-size: 15px; color: #2E7A4E; }
+
+  /* ── CERCA ── */
+  .cerca-section { padding: 14px; }
+  .cerca-locbtn {
+    width: 100%; padding: 12px; border: 1.5px solid var(--gold);
+    background: var(--burgundy-dark); color: var(--gold-light);
+    font-family: 'Playfair Display', serif; font-size: 15px;
+    border-radius: 3px; cursor: pointer; margin-bottom: 14px;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .cerca-locbtn:hover { background: var(--burgundy); }
+  .cerca-result {
+    background: white; border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 3px; padding: 14px; margin-bottom: 8px;
+  }
+  .cerca-dist { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 4px; }
+  .cerca-nombre { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--burgundy); margin-bottom: 2px; }
+  .cerca-info { font-size: 12px; color: var(--text-muted); }
+  .cerca-badge {
+    display: inline-block; margin-top: 6px; font-size: 10px; padding: 2px 10px;
+    border-radius: 2px; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .cerca-badge.en-calle { background: rgba(107,27,42,0.1); color: var(--burgundy); border: 1px solid rgba(107,27,42,0.3); }
+  .cerca-badge.pendiente { background: rgba(201,168,76,0.1); color: var(--gold-dark); border: 1px solid rgba(201,168,76,0.3); }
+  .cerca-placeholder { text-align: center; padding: 30px 0; color: var(--text-muted); font-style: italic; font-size: 14px; }
+
+  /* ── AGENDA ── */
+  .ai-loading { display:flex;align-items:center;gap:10px;padding:16px;color:var(--text-muted);font-size:13px;font-family:'Cormorant Garamond',serif; }
+  .ai-spinner { width:18px;height:18px;border:2px solid rgba(201,168,76,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .ai-error { padding:14px;background:rgba(183,28,28,0.08);border:1px solid rgba(183,28,28,0.25);border-radius:4px;color:#B71C1C;font-size:12px;line-height:1.5; }
+
+  /* ── WEBCAMS ── */
+  .webcam-section { padding: 14px; }
+  .webcam-card {
+    background: var(--cream);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 5px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .webcam-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--burgundy-dark);
+    gap: 10px;
+  }
+  .webcam-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--gold-light);
+  }
+  .webcam-card-sub { font-size: 10px; color: rgba(201,168,76,0.6); letter-spacing: 0.5px; }
+  .webcam-open-btn {
+    padding: 4px 10px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 3px;
+    color: var(--gold);
+    font-size: 11px;
+    font-family: 'Cormorant Garamond', serif;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .webcam-open-btn:hover { background: rgba(201,168,76,0.1); }
+  .webcam-link-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--cream);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .webcam-link-row:hover { background: rgba(201,168,76,0.06); border-color: var(--gold); }
+  .webcam-link-icon { font-size: 22px; flex-shrink: 0; line-height: 1; }
+  .webcam-link-info { flex: 1; }
+  .webcam-link-name { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+  .webcam-link-sub { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+  .webcam-link-arrow { color: var(--gold); font-size: 16px; flex-shrink: 0; }
+  /* Cámaras tráfico grid */
+  .cam-tile {
+    background: #111;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.15);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .cam-tile:hover { border-color: var(--gold); }
+  .cam-tile img { width:100%; height:90px; object-fit:cover; display:block; background:#111; }
+  .cam-tile-label {
+    padding: 4px 6px;
+    font-size: 9px;
+    color: rgba(201,168,76,0.7);
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: var(--burgundy-dark);
+  }
+  .cam-big {
+    grid-column: 1 / -1;
+  }
+  .cam-big img { height: 180px; }
+  .webcam-toggle-btn {
+    width: 100%;
+    padding: 8px;
+    background: rgba(107,27,42,0.06);
+    border: none;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .webcam-toggle-btn:hover { background: rgba(107,27,42,0.12); }
+  .webcam-frame { display: none; }
+  .webcam-frame.open { display: block; }
+  .webcam-ratio {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+  }
+  .webcam-ratio iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+  .agenda-section { padding: 14px; }
+  .agenda-item {
+    display: flex; gap: 12px; padding: 11px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    align-items: flex-start;
+  }
+  .agenda-item:last-child { border-bottom: none; }
+  .agenda-date {
+    min-width: 44px; text-align: center; flex-shrink: 0;
+    background: var(--burgundy-dark); border: 1px solid var(--gold-dark);
+    border-radius: 3px; padding: 5px 4px;
+  }
+  .agenda-day { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold-light); line-height: 1; display: block; }
+  .agenda-month { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); opacity: 0.8; display: block; }
+  .agenda-body { flex: 1; }
+  .agenda-tipo {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 1px 7px; border-radius: 2px; margin-bottom: 4px; display: inline-block;
+  }
+  .agenda-tipo.culto { background: rgba(46,126,78,0.1); color: #2E7A4E; border: 1px solid rgba(46,126,78,0.3); }
+  .agenda-tipo.besapies { background: rgba(107,27,42,0.1); color: var(--burgundy); border: 1px solid rgba(107,27,42,0.3); }
+  .agenda-tipo.viacrucis { background: rgba(201,168,76,0.1); color: var(--gold-dark); border: 1px solid rgba(201,168,76,0.3); }
+  .agenda-tipo.pregon { background: rgba(30,60,130,0.1); color: #1B4E8B; border: 1px solid rgba(30,60,130,0.3); }
+  .agenda-tipo.procesion { background: rgba(61,13,23,0.1); color: var(--burgundy-dark); border: 1px solid rgba(61,13,23,0.3); }
+  .agenda-nombre { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+  .agenda-lugar { font-size: 12px; color: var(--text-muted); }
+  .agenda-hora { font-size: 11px; color: var(--gold-dark); font-weight: 600; margin-top: 3px; }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app-header">
+    <div class="header-ornament">✦ Semana Santa ✦</div>
+    <div class="app-title">Sevilla</div>
+    <div class="app-subtitle">Guía Oficial</div>
+    <div class="year-badge">2026</div>
+    <div style="position:absolute;bottom:10px;right:12px;background:rgba(61,13,23,0.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:4px 10px 4px 8px;border-radius:20px;border:1px solid rgba(201,168,76,0.35);">
+      <span style="font-size:11px;color:var(--gold-light);letter-spacing:1.5px;font-family:'Cormorant Garamond',serif;font-style:italic;">by Socram MASP</span>
+    </div>
+  </div>
+
+  <div class="nav-tabs"></div>
+
+  <!-- MENÚ CABECERA -->
+  <div class="top-menu-bar" style="position:relative;">
+    <div class="top-menu-active-label">
+      <span class="top-menu-active-icon" id="menu-active-icon">🕯️</span>
+      <span id="menu-active-name">Itinerario</span>
+    </div>
+    <button class="top-menu-toggle" id="menu-toggle-btn" onclick="toggleDropdown()">
+      Menú <i class="chevron">▾</i>
+    </button>
+    <div class="top-menu-dropdown" id="top-dropdown">
+      <div class="dropdown-grid">
+        <button class="dropdown-item active" id="btn-itinerario" onclick="switchTab('itinerario','🕯️','Itinerario')">
+          <span class="d-icon">🕯️</span>Itinerario
+        </button>
+        <button class="dropdown-item" id="btn-media" onclick="switchTab('media','📻📺','Radio & TV')">
+          <span class="d-icon">📻📺</span>Radio & TV
+        </button>
+        <button class="dropdown-item" id="btn-recorrido" onclick="switchTab('recorrido','🗺️','Recorridos')">
+          <span class="d-icon">🗺️</span>Recorridos
+        </button>
+        <button class="dropdown-item" id="btn-alertas" onclick="switchTab('alertas','🔔','Alertas')">
+          <span class="d-icon">🔔</span>Alertas
+        </button>
+        <button class="dropdown-item" id="btn-cerca" onclick="switchTab('cerca','📍','GPS')">
+          <span class="d-icon">📍</span>GPS
+        </button>
+        <button class="dropdown-item" id="btn-tiempo" onclick="switchTab('tiempo','🌤️','Tiempo')">
+          <span class="d-icon">🌤️</span>Tiempo
+        </button>
+        <button class="dropdown-item" id="btn-agenda" onclick="switchTab('agenda','🗓️','Agenda')">
+          <span class="d-icon">🗓️</span>Agenda
+        </button>
+        <button class="dropdown-item" id="btn-pdfs" onclick="switchTab('pdfs','📄','PDF')">
+          <span class="d-icon">📄</span>PDF
+        </button>
+        <button class="dropdown-item" id="btn-vocab" onclick="switchTab('vocab','📖','Vocabulario')">
+          <span class="d-icon">📖</span>Vocabulario
+        </button>
+        <button class="dropdown-item" id="btn-youtube" onclick="switchTab('youtube','▶','YouTube')">
+          <span class="d-icon">▶</span>YouTube
+        </button>
+        <button class="dropdown-item" id="btn-webcam" onclick="switchTab('webcam','📷','Webcams')">
+          <span class="d-icon">📷</span>Webcams
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ITINERARIO -->
+    <div id="tab-itinerario" class="section active">
+      <div class="day-selector">
+        <button class="day-btn" onclick="selectDay(this,'vdo')"><span class="d-name">V.Dol</span><span class="d-date">27</span></button>
+        <button class="day-btn" onclick="selectDay(this,'spas')"><span class="d-name">S.Pas</span><span class="d-date">28</span></button>
+        <button class="day-btn active" onclick="selectDay(this,'dom')"><span class="d-name">D.Ram</span><span class="d-date">29</span></button>
+        <button class="day-btn" onclick="selectDay(this,'lun')"><span class="d-name">Lun</span><span class="d-date">30</span></button>
+        <button class="day-btn" onclick="selectDay(this,'mar')"><span class="d-name">Mar</span><span class="d-date">31</span></button>
+        <button class="day-btn" onclick="selectDay(this,'mie')"><span class="d-name">Mié</span><span class="d-date">1</span></button>
+        <button class="day-btn" onclick="selectDay(this,'jue')"><span class="d-name">Jue</span><span class="d-date">2</span></button>
+        <button class="day-btn" onclick="selectDay(this,'mad')"><span class="d-name">Madrugá</span><span class="d-date">3</span></button>
+        <button class="day-btn" onclick="selectDay(this,'vie')"><span class="d-name">Vie</span><span class="d-date">3</span></button>
+        <button class="day-btn" onclick="selectDay(this,'sab')"><span class="d-name">Sáb</span><span class="d-date">4</span></button>
+        <button class="day-btn" onclick="selectDay(this,'res')"><span class="d-name">D.Res</span><span class="d-date">5</span></button>
+      </div>
+      <div class="cofradias-list" id="cofradias-list"></div>
+    </div>
+
+    <!-- RADIO Y TV -->
+    <div id="tab-media" class="section">
+      <div class="media-section">
+        <div class="media-group-title">Radio en directo</div>
+
+        <!-- Canal Sur Radio -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#00529B;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#00529B"/>
+                <text x="22" y="16" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" font-family="Arial">CANAL</text>
+                <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" font-family="Arial">SUR</text>
+                <text x="22" y="38" text-anchor="middle" fill="#7EC8E3" font-size="8" font-family="Arial">RADIO</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">Canal Sur Radio</div>
+              <div class="media-desc">Cobertura especial Semana Santa</div>
+            </div>
+          </div>
+          <audio id="audio-csr" controls preload="none" style="width:100%; height:36px; accent-color:#6B1B2A;">
+            <source src="https://rtva-live-radio.flumotion.com/rtva/csr.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <!-- Cadena SER Sevilla -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#C8001D;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#C8001D"/>
+                <ellipse cx="22" cy="18" rx="10" ry="10" fill="none" stroke="#fff" stroke-width="2"/>
+                <ellipse cx="22" cy="18" rx="6" ry="6" fill="none" stroke="#fff" stroke-width="1.5"/>
+                <circle cx="22" cy="18" r="2.5" fill="#fff"/>
+                <text x="22" y="36" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" font-family="Arial">SER</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">Cadena SER Sevilla</div>
+              <div class="media-desc">Cobertura cofrade en directo</div>
+            </div>
+          </div>
+          <audio id="audio-ser" controls preload="none" style="width:100%; height:36px; accent-color:#6B1B2A;">
+            <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/SER_SEVILLA.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <!-- Trabajera Radio -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#3D0D17;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#3D0D17"/>
+                <path d="M22 8 L22 28" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M14 14 Q8 22 14 30" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                <path d="M30 14 Q36 22 30 30" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 11 Q2 22 10 33" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                <path d="M34 11 Q42 22 34 33" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                <circle cx="22" cy="30" r="3" fill="#C9A84C"/>
+                <text x="22" y="42" text-anchor="middle" fill="#C9A84C" font-size="6" font-family="Arial">TRABAJERA</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">Trabajera Radio</div>
+              <div class="media-desc">Radio cofrade en directo</div>
+            </div>
+          </div>
+          <audio id="audio-trabajera" controls preload="none" style="width:100%; height:36px; accent-color:#6B1B2A;">
+            <source src="http://37.157.242.104:35878/stream" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <!-- Giralda FM -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#F5EDD8;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#F5EDD8"/>
+                <!-- Giralda simplificada -->
+                <rect x="17" y="30" width="10" height="10" fill="#8B6914"/>
+                <rect x="18.5" y="22" width="7" height="9" fill="#8B6914"/>
+                <rect x="19.5" y="16" width="5" height="7" fill="#C9A84C"/>
+                <rect x="20.5" y="11" width="3" height="6" fill="#C9A84C"/>
+                <rect x="21" y="8" width="2" height="4" fill="#8B6914"/>
+                <!-- ventanas -->
+                <rect x="19" y="24" width="2" height="3" fill="#F5EDD8"/>
+                <rect x="23" y="24" width="2" height="3" fill="#F5EDD8"/>
+                <text x="22" y="42" text-anchor="middle" fill="#6B1B2A" font-size="7" font-weight="700" font-family="Arial">GIRALDA</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">Giralda FM</div>
+              <div class="media-desc">La radio de Sevilla · En directo</div>
+            </div>
+          </div>
+          <audio id="audio-giralda" controls preload="none" style="width:100%; height:36px; accent-color:#6B1B2A;">
+            <source src="https://server1.radiocast.es/listen/radio_giralda/giraldaweb" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="media-group-title" style="margin-top:16px;">Televisión</div>
+
+        <!-- Canal Sur TV -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#00529B;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#00529B"/>
+                <!-- pantalla TV -->
+                <rect x="7" y="10" width="30" height="20" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+                <rect x="10" y="13" width="24" height="14" rx="1" fill="#7EC8E3" opacity="0.4"/>
+                <line x1="18" y1="30" x2="15" y2="36" stroke="#fff" stroke-width="1.5"/>
+                <line x1="26" y1="30" x2="29" y2="36" stroke="#fff" stroke-width="1.5"/>
+                <line x1="13" y1="36" x2="31" y2="36" stroke="#fff" stroke-width="1.5"/>
+                <text x="22" y="22" text-anchor="middle" fill="#fff" font-size="7" font-weight="700" font-family="Arial">CANAL</text>
+                <text x="22" y="30" text-anchor="middle" fill="#7EC8E3" font-size="6" font-family="Arial">SUR</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">Canal Sur Televisión</div>
+              <div class="media-desc">En directo — todas las cofradías</div>
+            </div>
+          </div>
+          <video id="video-canalsur" controls preload="none" style="width:100%; border-radius:3px; background:#000;" playsinline></video>
+          <script>
+            (function() {
+              var video = document.getElementById('video-canalsur');
+              var src = 'https://live-24-canalsur.interactvty.pro/9bb0f4edcb8946e79f5017ddca6c02b0/26af5488cda642ed2eddd27a6328c93b9c03e9181b9d0a825147a7d978e69202.m3u8';
+              if (window.Hls && Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(src);
+                hls.attachMedia(video);
+              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+              }
+            })();
+          </script>
+        </div>
+
+        <!-- 7TV Sevilla -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#E8000D;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#E8000D"/>
+                <text x="22" y="26" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="Arial">7</text>
+                <text x="22" y="38" text-anchor="middle" fill="#fff" font-size="6" font-weight="700" font-family="Arial">TV SEVILLA</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">7TV Sevilla</div>
+              <div class="media-desc">Televisión local · Sevilla en directo</div>
+            </div>
+          </div>
+          <video id="video-7tv" controls preload="none" style="width:100%; border-radius:3px; background:#000;" playsinline></video>
+          <script>
+            (function() {
+              var video = document.getElementById('video-7tv');
+              var src = 'https://especial7tv.gestec-video.com/hls/7TVSEVILLA.m3u8';
+              if (window.Hls && Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(src);
+                hls.attachMedia(video);
+              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+              }
+            })();
+          </script>
+        </div>
+
+        <!-- PTV Sevilla -->
+        <div class="media-card" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="display:flex; align-items:center; gap:12px; width:100%;">
+            <div class="media-logo" style="background:#1A3A6B;padding:0;overflow:hidden;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#1A3A6B"/>
+                <text x="22" y="24" text-anchor="middle" fill="#fff" font-size="14" font-weight="900" font-family="Arial">PTV</text>
+                <text x="22" y="37" text-anchor="middle" fill="#C9A84C" font-size="6" font-weight="700" font-family="Arial">SEVILLA</text>
+              </svg>
+            </div>
+            <div class="media-info">
+              <div class="media-name">PTV Sevilla</div>
+              <div class="media-desc">Canal local · Cobertura cofrade</div>
+            </div>
+          </div>
+          <video id="video-ptv" controls preload="none" style="width:100%; border-radius:3px; background:#000;" playsinline></video>
+          <script>
+            (function() {
+              var video = document.getElementById('video-ptv');
+              var src = 'https://streamer.zapitv.com/PTV_sevilla/index.m3u8';
+              if (window.Hls && Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(src);
+                hls.attachMedia(video);
+              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+              }
+            })();
+          </script>
+        </div>
+
+        <p style="font-size:11px; color:var(--text-muted); margin-top:12px; text-align:center; letter-spacing:0.5px;">▶ Pulsa play para reproducir en directo</p>
+      </div>
+    </div>
+
+    <!-- RECORRIDOS -->
+    <div id="tab-recorrido" class="section">
+      <div class="recorrido-section">
+        <select class="cofradia-select" id="recorrido-day-sel" onchange="filterRecorridos(this.value)" style="margin-bottom:6px;">
+          <option value="all">— Todas las jornadas —</option>
+          <option value="vdo">Viernes de Dolores (27 mar)</option>
+          <option value="spas">Sábado de Pasión (28 mar)</option>
+          <option value="dom">Domingo de Ramos (29 mar)</option>
+          <option value="lun">Lunes Santo (30 mar)</option>
+          <option value="mar">Martes Santo (31 mar)</option>
+          <option value="mie">Miércoles Santo (1 abr)</option>
+          <option value="jue">Jueves Santo (2 abr)</option>
+          <option value="mad">La Madrugá (2-3 abr)</option>
+          <option value="vie">Viernes Santo (3 abr)</option>
+          <option value="sab">Sábado Santo (4 abr)</option>
+          <option value="res">Domingo Resurrección (5 abr)</option>
+        </select>
+        <select class="cofradia-select" id="recorrido-sel" onchange="updateRecorrido(this.value)"></select>
+
+        <div class="mapa-container" style="position:relative;">
+          <div style="background:var(--burgundy-dark); padding:6px 12px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--gold-dark);">
+            <span style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); opacity:0.8;">Mapa en vivo · Sevilla</span>
+            <span style="margin-left:auto; display:flex; align-items:center; gap:5px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#e74c3c;display:inline-block;animation:pulse-live 1.5s infinite;"></span>
+              <span style="font-size:9px; color:var(--gold-light); letter-spacing:1px;">EN DIRECTO</span>
+            </span>
+          </div>
+          <iframe
+            src="https://idesevilla.maps.arcgis.com/apps/Embed/index.html?webmap=f6518b64aab845c0896643e860e378e3&extent=-6.0099,37.3714,-5.97,37.4034&home=true&zoom=true&"
+            width="100%"
+            height="300"
+            style="border:none; display:block;"
+            allowfullscreen
+            loading="lazy"
+            title="Mapa en vivo Semana Santa Sevilla 2026">
+          </iframe>
+        </div>
+
+        <div class="recorrido-info">
+          <div class="recorrido-stats">
+            <div class="stat-item"><span class="stat-value" id="stat-sal">—</span><span class="stat-label">salida</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-rec">—</span><span class="stat-label">recogida</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-zona">—</span><span class="stat-label">barrio</span></div>
+          </div>
+          <div class="ornament-divider">✦ ✦ ✦</div>
+          <div id="pasos-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIEMPO -->
+    <div id="tab-tiempo" class="section">
+      <div class="tiempo-section">
+
+        <!-- Submenú proveedores -->
+        <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;">
+          <button onclick="openLink('https://www.aemet.es/es/eltiempo/prediccion/municipios/horas/sevilla-id41091')" style="flex-shrink:0;padding:5px 12px;border:1px solid var(--gold-dark);border-radius:20px;background:var(--burgundy-dark);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">🇪🇸 AEMET</button>
+          <button onclick="openLink('https://www.foreca.es/Spain/Seville')" style="flex-shrink:0;padding:5px 12px;border:1px solid var(--gold-dark);border-radius:20px;background:var(--burgundy-dark);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">🌐 Foreca</button>
+          <button onclick="openLink('https://weather.com/es-ES/tiempo/10dias/l/152726986bd4c3459adb2e419c8bde1dd10a6239ed5c92fa1119016d572f0a95')" style="flex-shrink:0;padding:5px 12px;border:1px solid var(--gold-dark);border-radius:20px;background:var(--burgundy-dark);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">🌤️ The Weather</button>
+        </div>
+
+        <div class="tiempo-actual">
+          <div class="tiempo-icon-big" id="wx-icon-big">🌦️</div>
+          <div class="tiempo-actual-info">
+            <div class="tiempo-temp-big" id="wx-temp">16°</div>
+            <div class="tiempo-desc" id="wx-desc">Nublado · Sevilla</div>
+            <div class="tiempo-ciudad" id="wx-updated">Dom 22 mar · Actualizado hoy</div>
+          </div>
+        </div>
+
+        <div class="tiempo-alerta">
+          <span>⚠️</span>
+          <span><strong>Semana Santa con riesgo de lluvia.</strong> Primera mitad inestable (Dom–Mié), mejoría del Jueves en adelante. Viernes Santo: soleado.</span>
+        </div>
+
+        <div class="media-group-title" style="margin-top:4px;">Previsión por jornada · 2026</div>
+
+        <div class="forecast-grid" id="wx-forecast-grid" style="grid-template-columns:repeat(4,1fr);">
+          <div class="forecast-day">
+            <span class="fc-dia">D.Ram 29</span>
+            <span class="fc-icon">☀️</span>
+            <span class="fc-temp">22°</span>
+            <span class="fc-lluvia">10%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Lun 30</span>
+            <span class="fc-icon">🌧️</span>
+            <span class="fc-temp">22°</span>
+            <span class="fc-lluvia">70%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Mar 31</span>
+            <span class="fc-icon">🌥️</span>
+            <span class="fc-temp">22°</span>
+            <span class="fc-lluvia">40%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Mié 1</span>
+            <span class="fc-icon">🌧️</span>
+            <span class="fc-temp">20°</span>
+            <span class="fc-lluvia">65%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Jue 2</span>
+            <span class="fc-icon">🌦️</span>
+            <span class="fc-temp">20°</span>
+            <span class="fc-lluvia">45%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Vie 3</span>
+            <span class="fc-icon">☀️</span>
+            <span class="fc-temp">21°</span>
+            <span class="fc-lluvia">5%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">Sáb 4</span>
+            <span class="fc-icon">🌥️</span>
+            <span class="fc-temp">20°</span>
+            <span class="fc-lluvia">30%</span>
+          </div>
+          <div class="forecast-day">
+            <span class="fc-dia">D.Res 5</span>
+            <span class="fc-icon">🌧️</span>
+            <span class="fc-temp">21°</span>
+            <span class="fc-lluvia">60%</span>
+          </div>
+        </div>
+
+        <!-- Widgets meteorológicos -->
+        <div style="margin:14px 0 10px;display:flex;flex-direction:column;gap:10px;">
+
+          <!-- Widget AEMET -->
+          <div style="border:1px solid rgba(201,168,76,0.25);border-radius:5px;overflow:hidden;">
+            <div style="background:var(--burgundy-dark);padding:7px 12px;font-family:'Playfair Display',serif;font-size:11px;color:var(--gold-light);letter-spacing:0.5px;">🇪🇸 AEMET · Previsión oficial Sevilla</div>
+            <div style="width:100%;height:220px;background:#f5f5f5;">
+              <iframe name="iframe_aemet_id33044" width="100%" height="100%" tabindex="0" id="iframe_aemet_id33044"
+                src="https://www.aemet.es/es/eltiempo/prediccion/municipios/mostrarwidget/sevilla-id41091?w=g4p011100001ohmffffffx4f86d9t95b6e9r1s8n2"
+                frameborder="0" scrolling="no" style="display:block;border:none;"></iframe>
+            </div>
+          </div>
+
+          <!-- Widget WO-Cloud -->
+          <div style="border:1px solid rgba(201,168,76,0.25);border-radius:5px;overflow:hidden;">
+            <div style="background:var(--burgundy-dark);padding:7px 12px;font-family:'Playfair Display',serif;font-size:11px;color:var(--gold-light);letter-spacing:0.5px;">🌡️ Tiempo detallado · Sevilla</div>
+            <div style="width:100%;height:318px;background:#f5f5f5;">
+              <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=8895273&language=es&region=ES&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius"
+                name="CW2" scrolling="no" width="100%" height="318" frameborder="0"
+                style="display:block;border:none;border-radius:0;"></iframe>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="cofradias-riesgo-title" style="margin-top:14px;">Riesgo lluvia por jornada cofrade</div>
+        <div id="wx-riesgo-list">
+        <div class="riesgo-item">
+          <div class="riesgo-hora">29 mar</div>
+          <div class="riesgo-nombre">Domingo de Ramos · 9 hdades.</div>
+          <span class="riesgo-badge riesgo-bajo">Soleado</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">30 mar</div>
+          <div class="riesgo-nombre">Lunes Santo · 11 hdades.</div>
+          <span class="riesgo-badge riesgo-alto">Lluvia</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">31 mar</div>
+          <div class="riesgo-nombre">Martes Santo · 8 hdades.</div>
+          <span class="riesgo-badge riesgo-medio">Nubes</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">1 abr</div>
+          <div class="riesgo-nombre">Miércoles Santo · 9 hdades.</div>
+          <span class="riesgo-badge riesgo-alto">Lluvia</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">2 abr</div>
+          <div class="riesgo-nombre">Jueves Santo · 7 hdades.</div>
+          <span class="riesgo-badge riesgo-medio">Precaución</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">2-3 abr</div>
+          <div class="riesgo-nombre">La Madrugá · 6 hdades.</div>
+          <span class="riesgo-badge riesgo-medio">Precaución</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">3 abr</div>
+          <div class="riesgo-nombre">Viernes Santo · 7 hdades. ☀️</div>
+          <span class="riesgo-badge riesgo-bajo">Soleado</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">4 abr</div>
+          <div class="riesgo-nombre">Sábado Santo · 5 hdades.</div>
+          <span class="riesgo-badge riesgo-medio">Nubes</span>
+        </div>
+        <div class="riesgo-item">
+          <div class="riesgo-hora">5 abr</div>
+          <div class="riesgo-nombre">Domingo Resurrección · 1 hdad.</div>
+          <span class="riesgo-badge riesgo-alto">Lluvia</span>
+        </div>
+        </div>
+
+        <p style="font-size:10px;color:var(--text-muted);margin-top:12px;text-align:center;font-style:italic;line-height:1.5;">Previsión orientativa · Fuentes: Vozpópuli/AEMET · Actualizado 22 mar 2026</p>
+
+      </div>
+    </div>
+
+    <!-- REVISTAS PDF -->
+    <div id="tab-pdfs" class="section">
+      <div class="pdf-section">
+
+        <div class="media-group-title">Publicaciones cofrades 2026</div>
+
+        <div class="pdf-card" id="pdf-1">
+          <div class="pdf-card-header" onclick="togglePdf('pdf-1')">
+            <div class="pdf-icon" style="background:transparent;border:none;padding:0;">
+              <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+                <rect width="38" height="38" rx="3" fill="#3D0D17"/>
+                <!-- sombrero capataz -->
+                <rect x="9" y="22" width="20" height="4" rx="1" fill="#C9A84C"/>
+                <rect x="13" y="14" width="12" height="9" rx="1" fill="#C9A84C"/>
+                <rect x="16" y="11" width="6" height="4" rx="1" fill="#C9A84C"/>
+                <!-- badajo -->
+                <line x1="26" y1="26" x2="32" y2="33" stroke="#E8C97A" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="32" cy="33" r="2" fill="#E8C97A"/>
+                <!-- texto -->
+                <text x="19" y="37" text-anchor="middle" fill="#E8C97A" font-size="5" font-family="Arial" font-weight="700">CAPATAZ</text>
+              </svg>
+            </div>
+            <div class="pdf-info">
+              <div class="pdf-name">El Capataz</div>
+              <div class="pdf-desc">Revista cofrade · Semana Santa 2026</div>
+            </div>
+            <span class="pdf-toggle">▾</span>
+          </div>
+          <div class="pdf-viewer">
+            <iframe src="https://drive.google.com/file/d/1lmNYdI0WfeO5N0YUmJIdW7-YO0s66dwa/preview" allow="autoplay" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="pdf-card" id="pdf-2">
+          <div class="pdf-card-header" onclick="togglePdf('pdf-2')">
+            <div class="pdf-icon" style="background:transparent;border:none;padding:0;">
+              <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+                <rect width="38" height="38" rx="3" fill="#1A3A5C"/>
+                <!-- escudo heráldico -->
+                <path d="M19 6 L30 10 L30 22 Q30 30 19 34 Q8 30 8 22 L8 10 Z" fill="#C9A84C" opacity="0.2" stroke="#C9A84C" stroke-width="1.5"/>
+                <path d="M19 10 L26 13 L26 22 Q26 27 19 30 Q12 27 12 22 L12 13 Z" fill="none" stroke="#E8C97A" stroke-width="1"/>
+                <!-- H de Helvetia -->
+                <text x="19" y="25" text-anchor="middle" fill="#E8C97A" font-size="11" font-family="Arial" font-weight="700">H</text>
+                <text x="19" y="36" text-anchor="middle" fill="#7EC8E3" font-size="5" font-family="Arial">HELVETIA</text>
+              </svg>
+            </div>
+            <div class="pdf-info">
+              <div class="pdf-name">Helvetia</div>
+              <div class="pdf-desc">Publicación especial · 2026</div>
+            </div>
+            <span class="pdf-toggle">▾</span>
+          </div>
+          <div class="pdf-viewer">
+            <iframe src="https://drive.google.com/file/d/1BTJXDVdx19NEh4fJDC7ZbPUvs8yJytyJ/preview" allow="autoplay" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="pdf-card" id="pdf-3">
+          <div class="pdf-card-header" onclick="togglePdf('pdf-3')">
+            <div class="pdf-icon" style="background:transparent;border:none;padding:0;">
+              <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+                <rect width="38" height="38" rx="3" fill="#2E5E2E"/>
+                <!-- candela / cirio -->
+                <rect x="16" y="15" width="6" height="16" rx="1" fill="#F5EDD8"/>
+                <ellipse cx="19" cy="15" rx="3" ry="1.5" fill="#E8D9B8"/>
+                <!-- llama -->
+                <path d="M19 7 Q16 10 18 13 Q19 15 19 15 Q19 15 20 13 Q22 10 19 7Z" fill="#FFD700"/>
+                <path d="M19 9 Q17.5 11 18.5 13 Q19 14 19 14 Q19 14 19.5 13 Q20.5 11 19 9Z" fill="#FF8C00"/>
+                <!-- texto -->
+                <text x="19" y="36" text-anchor="middle" fill="#C8E6A0" font-size="4.5" font-family="Arial" font-weight="700">INFO COFRADE</text>
+              </svg>
+            </div>
+            <div class="pdf-info">
+              <div class="pdf-name">Info Cofrade</div>
+              <div class="pdf-desc">Guía informativa · Sevilla 2026</div>
+            </div>
+            <span class="pdf-toggle">▾</span>
+          </div>
+          <div class="pdf-viewer">
+            <iframe src="https://drive.google.com/file/d/1mBivCaXhIizs9LC0NonZ1GSYXwpgnMrF/preview" allow="autoplay" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="pdf-card" id="pdf-4">
+          <div class="pdf-card-header" onclick="togglePdf('pdf-4')">
+            <div class="pdf-icon" style="background:transparent;border:none;padding:0;">
+              <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+                <rect width="38" height="38" rx="3" fill="#6B1B2A"/>
+                <!-- cruz procesional -->
+                <rect x="17.5" y="5" width="3" height="22" rx="1" fill="#C9A84C"/>
+                <rect x="10" y="11" width="18" height="3" rx="1" fill="#C9A84C"/>
+                <!-- orla inferior -->
+                <rect x="6" y="30" width="26" height="2" rx="1" fill="#C9A84C" opacity="0.6"/>
+                <text x="19" y="37" text-anchor="middle" fill="#E8C97A" font-size="4.5" font-family="Arial" font-weight="700">OFICIAL 2026</text>
+              </svg>
+            </div>
+            <div class="pdf-info">
+              <div class="pdf-name">Programa Oficial</div>
+              <div class="pdf-desc">Consejo Hermandades · 2026</div>
+            </div>
+            <span class="pdf-toggle">▾</span>
+          </div>
+          <div class="pdf-viewer">
+            <iframe src="https://drive.google.com/file/d/1aEijoWD5YLFAidkuW3EBS2AQZ4eYGoHR/preview" allow="autoplay" loading="lazy"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VOCABULARIO -->
+    <div id="tab-vocab" class="section">
+      <div class="vocab-section">
+        <input class="vocab-search" type="text" placeholder="Buscar término cofrade…" id="vocab-search" oninput="filterVocab()">
+        <div class="vocab-cats" id="vocab-cats"></div>
+        <div class="vocab-count" id="vocab-count"></div>
+        <div id="vocab-list"></div>
+      </div>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div id="tab-youtube" class="section">
+      <div class="yt-section">
+
+        <div class="media-group-title">Canales cofrades en directo</div>
+
+        <!-- Consejos HH y CC -->
+        <div class="yt-card" id="yt-card-1">
+          <div class="yt-card-header">
+            <div class="yt-logo">
+              <svg viewBox="0 0 42 42" width="42" height="42" xmlns="http://www.w3.org/2000/svg">
+                <rect width="42" height="42" rx="3" fill="#3D0D17"/>
+                <!-- corona de espinas -->
+                <path d="M10 24 Q14 17 21 16 Q28 17 32 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                <path d="M13 22 L11 18 L15 21" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 18 L21 13 L23 17" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M29 22 L31 18 L27 21" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- texto -->
+                <text x="21" y="33" text-anchor="middle" fill="#E8C97A" font-size="6" font-weight="700" font-family="Arial">HH y CC</text>
+                <text x="21" y="40" text-anchor="middle" fill="#C9A84C" font-size="4.5" font-family="Arial">CONSEJOS</text>
+              </svg>
+            </div>
+            <div class="yt-info">
+              <div class="yt-name">Consejos HH y CC</div>
+              <div class="yt-desc">Directos y noticias cofrades de Sevilla</div>
+            </div>
+            <button class="yt-open-btn" onclick="openLink('https://www.youtube.com/channel/UCZ-4RhSF_WRI60nOpUQOMPA/streams')">Abrir ↗</button>
+          </div>
+          <button class="yt-toggle-btn" onclick="toggleYT('yt-embed-1', this)">▶ Ver directo en app</button>
+          <div class="yt-embed" id="yt-embed-1" style="display:none;">
+            <iframe src="https://www.youtube.com/embed/live_stream?channel=UCZ-4RhSF_WRI60nOpUQOMPA&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- 101TV Sevilla -->
+        <div class="yt-card" id="yt-card-2">
+          <div class="yt-card-header">
+            <div class="yt-logo">
+              <svg viewBox="0 0 42 42" width="42" height="42" xmlns="http://www.w3.org/2000/svg">
+                <rect width="42" height="42" rx="3" fill="#1A1A1A"/>
+                <!-- pantalla tv -->
+                <rect x="5" y="9" width="32" height="19" rx="2" fill="none" stroke="#E8C97A" stroke-width="1.5"/>
+                <rect x="8" y="12" width="26" height="13" rx="1" fill="#C8001D" opacity="0.25"/>
+                <!-- botón play dentro -->
+                <polygon points="17,15 17,22 26,18.5" fill="#E8C97A" opacity="0.9"/>
+                <!-- patas tv -->
+                <line x1="15" y1="28" x2="12" y2="34" stroke="#E8C97A" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="27" y1="28" x2="30" y2="34" stroke="#E8C97A" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="10" y1="34" x2="32" y2="34" stroke="#E8C97A" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- texto -->
+                <text x="21" y="41" text-anchor="middle" fill="#C8001D" font-size="5.5" font-weight="700" font-family="Arial">101TV SEVILLA</text>
+              </svg>
+            </div>
+            <div class="yt-info">
+              <div class="yt-name">101TV Sevilla</div>
+              <div class="yt-desc">Televisión local · Semana Santa en directo</div>
+            </div>
+            <button class="yt-open-btn" onclick="openLink('https://www.youtube.com/c/@101TVSevilla/streams')">Abrir ↗</button>
+          </div>
+          <button class="yt-toggle-btn" onclick="toggleYT('yt-embed-2', this)">▶ Ver directo en app</button>
+          <div class="yt-embed" id="yt-embed-2" style="display:none;">
+            <iframe src="https://www.youtube.com/embed/live_stream?channel=101TVSevilla&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- LibetelTV -->
+        <div class="yt-card" id="yt-card-3">
+          <div class="yt-card-header">
+            <div class="media-logo" style="background:#1A1A2E;padding:0;overflow:hidden;border-radius:4px;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#1A1A2E"/>
+                <circle cx="22" cy="18" r="9" fill="none" stroke="#C9A84C" stroke-width="2"/>
+                <polygon points="19,14 19,22 27,18" fill="#C9A84C"/>
+                <text x="22" y="34" text-anchor="middle" fill="#C9A84C" font-size="5.5" font-weight="700" font-family="Arial">LIBETELTV</text>
+              </svg>
+            </div>
+            <div class="yt-info">
+              <div class="yt-name">LibetelTV</div>
+              <div class="yt-desc">Televisión cofrade · Sevilla</div>
+            </div>
+            <button class="yt-open-btn" onclick="openLink('https://youtube.com/c/LIBETELTV')">Abrir ↗</button>
+          </div>
+          <button class="yt-toggle-btn" onclick="toggleYT('yt-embed-3', this)">▶ Ver directo en app</button>
+          <div class="yt-embed" id="yt-embed-3">
+            <iframe src="https://www.youtube.com/embed/live_stream?channel=LIBETELTV&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Correo de Andalucía TV -->
+        <div class="yt-card" id="yt-card-4">
+          <div class="yt-card-header">
+            <div class="media-logo" style="background:#B71C1C;padding:0;overflow:hidden;border-radius:4px;">
+              <svg viewBox="0 0 44 44" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+                <rect width="44" height="44" fill="#B71C1C"/>
+                <rect x="7" y="13" width="30" height="18" rx="2" fill="none" stroke="#fff" stroke-width="1.5"/>
+                <polyline points="7,13 22,24 37,13" fill="none" stroke="#fff" stroke-width="1.5"/>
+                <text x="22" y="38" text-anchor="middle" fill="#fff" font-size="4.5" font-weight="700" font-family="Arial">CORREO TV</text>
+              </svg>
+            </div>
+            <div class="yt-info">
+              <div class="yt-name">Correo de Andalucía TV</div>
+              <div class="yt-desc">Noticias y cofradías · Andalucía</div>
+            </div>
+            <button class="yt-open-btn" onclick="openLink('https://www.youtube.com/user/correodeandaluciatv/streams')">Abrir ↗</button>
+          </div>
+          <button class="yt-toggle-btn" onclick="toggleYT('yt-embed-4', this)">▶ Ver directo en app</button>
+          <div class="yt-embed" id="yt-embed-4">
+            <iframe src="https://www.youtube.com/embed/live_stream?channel=correodeandaluciatv&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <p style="font-size:11px; color:var(--text-muted); margin-top:4px; text-align:center; letter-spacing:0.5px;">▶ Ver en app · Abrir ↗ abre en YouTube</p>
+
+      </div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div id="tab-alertas" class="section">
+      <div class="alertas-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div class="media-group-title" style="margin:0;">Estado en tiempo real</div>
+          <button onclick="cargarAlertas(true)" id="alertas-refresh-btn" style="background:transparent;border:1px solid var(--gold-dark);border-radius:20px;padding:4px 12px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">↻ Actualizar</button>
+        </div>
+        <div id="alertas-updated" style="font-size:10px;color:var(--text-muted);letter-spacing:0.5px;margin-bottom:12px;font-style:italic;"></div>
+        <div id="alertas-container">
+          <div style="text-align:center;padding:30px;color:var(--text-muted);font-size:13px;">
+            <div style="font-size:28px;margin-bottom:8px;">🔔</div>
+            Cargando alertas...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERCA -->
+    <div id="tab-cerca" class="section">
+      <div class="cerca-section">
+        <div class="media-group-title">Cofradías cerca de ti</div>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.5;">Activa tu ubicación para saber qué hermandades están procesionando cerca de donde estás ahora mismo.</p>
+        <button class="cerca-locbtn" onclick="buscarCerca()">📍 Detectar mi ubicación</button>
+        <div id="cerca-results"><div class="cerca-placeholder">Pulsa el botón para detectar tu posición y ver las cofradías más cercanas.</div></div>
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div id="tab-agenda" class="section">
+      <div class="agenda-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div class="media-group-title" style="margin:0;">Agenda · Semana Santa 2026</div>
+          <button onclick="cargarAgenda(true)" id="agenda-refresh-btn" style="background:transparent;border:1px solid var(--gold-dark);border-radius:20px;padding:4px 12px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">↻ Actualizar</button>
+        </div>
+        <div id="agenda-updated" style="font-size:10px;color:var(--text-muted);letter-spacing:0.5px;margin-bottom:12px;font-style:italic;"></div>
+        <div id="agenda-list">
+          <div style="text-align:center;padding:30px;color:var(--text-muted);font-size:13px;">
+            <div style="font-size:28px;margin-bottom:8px;">🗓️</div>
+            Cargando agenda...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEBCAMS -->
+    <div id="tab-webcam" class="section">
+      <div class="webcam-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div class="media-group-title" style="margin:0;">📷 Cámaras de tráfico · Sevilla</div>
+          <button onclick="recargarCamaras()" id="cam-refresh-btn" style="background:transparent;border:1px solid var(--gold-dark);border-radius:20px;padding:4px 12px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:1px;cursor:pointer;">↻ Actualizar</button>
+        </div>
+        <div id="cam-updated" style="font-size:10px;color:var(--text-muted);letter-spacing:0.5px;margin-bottom:12px;font-style:italic;"></div>
+
+        <!-- Grid de cámaras municipales -->
+        <div id="cam-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
+
+        <!-- Enlace directo -->
+        <div style="margin-top:14px;">
+          <div class="media-group-title">Ver en web oficial</div>
+          <div class="webcam-link-row" onclick="openLink('https://trafico.sevilla.org/')">
+            <div class="webcam-link-icon">🚦</div>
+            <div class="webcam-link-info">
+              <div class="webcam-link-name">trafico.sevilla.org</div>
+              <div class="webcam-link-sub">Portal oficial Ayto. Sevilla · Todas las cámaras del centro · Tiempo real</div>
+            </div>
+            <span class="webcam-link-arrow">↗</span>
+          </div>
+          <div class="webcam-link-row" onclick="openLink('https://www.skylinewebcams.com/es/webcam/espana/andalucia/sevilla.html')" style="margin-top:8px;">
+            <div class="webcam-link-icon">🌐</div>
+            <div class="webcam-link-info">
+              <div class="webcam-link-name">Skyline Webcams · Sevilla</div>
+              <div class="webcam-link-sub">Catedral · Plaza Triunfo · Puente Triana · Torre del Oro</div>
+            </div>
+            <span class="webcam-link-arrow">↗</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>
+</div>
+<script>
+const cofradiasData = {
+  vdo: [
+    { hora:'18:30', nombre:'Dulce Nombre de Bellavista', zona:'Pq. Sagrado Corazón · Bellavista', color:'#2E5E8B', status:'pendiente' },
+    { hora:'19:00', nombre:'Pino Montano', zona:'Pq. Santa Genoveva · Pino Montano', color:'#4E8B1A', status:'pendiente' },
+    { hora:'19:30', nombre:'Cristo de la Corona', zona:'Pq. Ntra. Sra. del Carmen · Triana', color:'#8B6914', status:'pendiente' },
+  ],
+  spas: [
+    { hora:'16:55', nombre:'San José Obrero', zona:'Pq. San José Obrero · Bellavista', color:'#1B4E8B', status:'pendiente' },
+    { hora:'18:00', nombre:'Divino Perdón', zona:'Pq. Santa Genoveva · Heliópolis', color:'#8B1A1A', status:'pendiente' },
+    { hora:'18:30', nombre:'Jesús Cautivo de Torreblanca', zona:'Pq. Ntra. Sra. Consolación · Torreblanca', color:'#5E2E8B', status:'pendiente' },
+  ],
+  dom: [
+    { hora:'13:00', nombre:'La Paz', zona:'Pq. San Sebastián · El Porvenir', color:'#2E7A4E', status:'pendiente' },
+    { hora:'13:45', nombre:'La Hiniesta', zona:'Pq. Santa Marina · Macarena', color:'#4E8B1A', status:'pendiente' },
+    { hora:'14:00', nombre:'La Cena', zona:'Iglesia Ntra. Sra. de Consolación (Los Terceros) · Alfalfa', color:'#8B6914', status:'pendiente' },
+    { hora:'14:15', nombre:'La Borriquita', zona:'Iglesia Colegial del Divino Salvador · Centro', color:'#8B4513', status:'pendiente' },
+    { hora:'14:20', nombre:'Jesús Despojado', zona:'Capilla del Mayor Dolor · Plaza de Molviedro', color:'#2E5E8B', status:'pendiente' },
+    { hora:'16:00', nombre:'San Roque', zona:'Pq. San Roque · Plaza Carmen Benítez', color:'#5E2E2E', status:'pendiente' },
+    { hora:'16:30', nombre:'La Estrella', zona:'Capilla de la Estrella · San Jacinto (Triana)', color:'#8B1A1A', status:'pendiente' },
+    { hora:'19:00', nombre:'La Amargura', zona:'Iglesia San Juan Bautista (La Palma) · Feria', color:'#8B1A4E', status:'pendiente' },
+    { hora:'20:15', nombre:'El Amor', zona:'Iglesia Colegial del Divino Salvador · Centro', color:'#C9A84C', status:'pendiente' },
+  ],
+  lun: [
+    { hora:'11:15', nombre:'El Cautivo', zona:'Pq. San Ignacio de Loyola · Los Pajaritos', color:'#8B4513', status:'pendiente' },
+    { hora:'12:25', nombre:'Santa Genoveva', zona:'Pq. Ntra. Sra. de las Mercedes y Sta. Genoveva · Heliópolis', color:'#C9A84C', status:'pendiente' },
+    { hora:'14:45', nombre:'El Beso de Judas (La Redención)', zona:'Iglesia de Santiago · Casco Antiguo', color:'#2E7A4E', status:'pendiente' },
+    { hora:'15:00', nombre:'San Gonzalo', zona:'Pq. San Gonzalo · Plaza San Gonzalo (Barrio León)', color:'#2E5E8B', status:'pendiente' },
+    { hora:'18:10', nombre:'Santa Marta', zona:'Pq. San Andrés · Casco Antiguo', color:'#8B6914', status:'pendiente' },
+    { hora:'18:15', nombre:'Las Aguas', zona:'Cap. Ntra. Sra. del Rosario (c/ Dos de Mayo) · Arenal', color:'#1A4E1A', status:'pendiente' },
+    { hora:'19:35', nombre:'Vera Cruz', zona:'Capilla del Dulce Nombre de Jesús · Casco Antiguo', color:'#3D1A00', status:'pendiente' },
+    { hora:'20:00', nombre:'Las Penas de San Vicente', zona:'Pq. San Vicente · Triana', color:'#8B1A4E', status:'pendiente' },
+    { hora:'20:40', nombre:'El Museo', zona:'Capilla del Museo · Plaza del Museo', color:'#8B1A1A', status:'pendiente' },
+  ],
+  mar: [
+    { hora:'11:40', nombre:'El Cerro', zona:'Pq. Ntra. Sra. de los Dolores · Cerro del Águila', color:'#8B1A1A', status:'pendiente' },
+    { hora:'14:40', nombre:'San Esteban', zona:'Iglesia de San Esteban · Barrio San Esteban', color:'#1B4E8B', status:'pendiente' },
+    { hora:'15:30', nombre:'La Candelaria (Jesús de la Salud)', zona:'Pq. San Nicolás de Bari · Casco Antiguo', color:'#8B6914', status:'pendiente' },
+    { hora:'16:00', nombre:'San Benito', zona:'Pq. San Benito · Barrio San Bernardo', color:'#2E7A4E', status:'pendiente' },
+    { hora:'18:30', nombre:'La Universidad (Buena Muerte)', zona:'Capilla de la Universidad · San Fernando', color:'#8B4513', status:'pendiente' },
+    { hora:'19:22', nombre:'Dulce Nombre (Los Estudiantes)', zona:'Pq. San Lorenzo · San Lorenzo', color:'#5E2E8B', status:'pendiente' },
+    { hora:'19:50', nombre:'Las Almas (Los Javieres)', zona:'Iglesia Sagrado Corazón (Jesuitas) · Gran Poder', color:'#8B1A4E', status:'pendiente' },
+    { hora:'20:05', nombre:'Santa Cruz', zona:'Pq. Santa Cruz · Barrio Santa Cruz', color:'#2E5E8B', status:'pendiente' },
+  ],
+  mie: [
+    { hora:'14:15', nombre:'San Bernardo', zona:'Pq. San Bernardo · Barrio San Bernardo', color:'#5E2E8B', status:'pendiente' },
+    { hora:'14:45', nombre:'El Carmen Doloroso', zona:'Pq. Ómnium Sanctórum · C/ Feria', color:'#8B1A1A', status:'pendiente' },
+    { hora:'15:00', nombre:'El Buen Fin', zona:'Iglesia San Antonio de Padua (Franciscanos) · San Vicente', color:'#8B4513', status:'pendiente' },
+    { hora:'12:00', nombre:'La Sed', zona:'Pq. Concepción (Nervión) · Cristo de la Sed', color:'#2E7A4E', status:'pendiente' },
+    { hora:'17:10', nombre:'El Baratillo', zona:'Capilla de la Piedad · Adriano (Arenal)', color:'#8B6914', status:'pendiente' },
+    { hora:'17:50', nombre:'La Lanzada', zona:'Iglesia de San Martín · Plaza de San Martín', color:'#1B4E8B', status:'pendiente' },
+    { hora:'19:25', nombre:'Cristo de Burgos', zona:'Pq. San Pedro · Plaza de San Pedro', color:'#3D1A00', status:'pendiente' },
+    { hora:'19:45', nombre:'Los Panaderos', zona:'Capilla de San Andrés · Orfila', color:'#6B1B2A', status:'pendiente' },
+    { hora:'20:50', nombre:'Las Siete Palabras', zona:'Pq. San Vicente · Casco Antiguo', color:'#C9A84C', status:'pendiente' },
+  ],
+  jue: [
+    { hora:'15:00', nombre:'Los Negritos', zona:'Capilla de los Ángeles · Recaredo', color:'#3D1A00', status:'pendiente' },
+    { hora:'15:20', nombre:'La Exaltación', zona:'Pq. Santa Catalina · Casco Antiguo', color:'#2E5E8B', status:'pendiente' },
+    { hora:'17:00', nombre:'Las Cigarreras', zona:'Iglesia Ntra. Sra. de Consolación (Los Terceros) · Alfalfa', color:'#8B1A4E', status:'pendiente' },
+    { hora:'17:30', nombre:'Montesión', zona:'Capilla de Monte Sión · C/ Feria', color:'#8B6914', status:'pendiente' },
+    { hora:'19:30', nombre:'El Valle', zona:'Iglesia de la Anunciación · Laraña', color:'#8B4513', status:'pendiente' },
+    { hora:'19:36', nombre:'Quinta Angustia', zona:'Pq. Santa María Magdalena · Centro', color:'#1B4E8B', status:'pendiente' },
+    { hora:'20:20', nombre:'La Pasión', zona:'Iglesia Colegial del Divino Salvador · Centro', color:'#5E2E8B', status:'pendiente' },
+  ],
+  mad: [
+    { hora:'00:00', nombre:'La Esperanza Macarena', zona:'Basílica de la Macarena · Macarena', color:'#0B5E8A', status:'pendiente' },
+    { hora:'00:35', nombre:'El Gran Poder', zona:'Basílica Ntro. Padre Jesús del Gran Poder · San Lorenzo', color:'#6B1B2A', status:'pendiente' },
+    { hora:'00:45', nombre:'El Silencio', zona:'Real Iglesia de San Antonio Abad · Alfonso XII', color:'#1A1A1A', status:'pendiente' },
+    { hora:'01:19', nombre:'Esperanza de Triana', zona:'Capilla de los Marineros (c/ Pureza) · Triana', color:'#4E1A8B', status:'pendiente' },
+    { hora:'04:05', nombre:'El Calvario', zona:'Pq. Santa María Magdalena · Centro', color:'#3D1A00', status:'pendiente' },
+  ],
+  vie: [
+    { hora:'02:30', nombre:'La Sagrada Mortaja', zona:'Cap. ex conv. de la Paz · Bustos Tavera', color:'#2E2E6B', status:'pendiente' },
+    { hora:'15:35', nombre:'El Cachorro', zona:'Basílica Smo. Cristo de la Expiración · Triana', color:'#5E2E2E', status:'pendiente' },
+    { hora:'16:40', nombre:'La Carretería', zona:'Capilla de la Carretería · Real de la Carretería', color:'#8B1A1A', status:'pendiente' },
+    { hora:'17:50', nombre:'La Soledad de San Buenaventura', zona:'Conv. San Buenaventura (PP. Franciscanos) · Carlos Cañal', color:'#2A2A5E', status:'pendiente' },
+    { hora:'18:00', nombre:'La O', zona:'Pq. Ntra. Sra. de la O · Triana', color:'#2E5E8B', status:'pendiente' },
+    { hora:'19:40', nombre:'San Isidoro', zona:'Pq. San Isidoro · Casco Antiguo', color:'#8B6914', status:'pendiente' },
+    { hora:'20:30', nombre:'Montserrat', zona:'Capilla de Montserrat · Cristo del Calvario', color:'#5E2E8B', status:'pendiente' },
+  ],
+  sab: [
+    { hora:'12:45', nombre:'El Sol', zona:'Pq. San Diego de Alcalá · Plaza del Aljarafe', color:'#C9A84C', status:'pendiente' },
+    { hora:'15:05', nombre:'La Trinidad', zona:'Basílica de María Auxiliadora · C/ María Auxiliadora', color:'#1B4E8B', status:'pendiente' },
+    { hora:'15:15', nombre:'Los Servitas', zona:'Cap. Ntra. Sra. de los Dolores · C/ Siete Dolores', color:'#2E7A4E', status:'pendiente' },
+    { hora:'18:45', nombre:'Santo Entierro Grande', zona:'Conv. San Gregorio (PP. Mercedarios) · Alfonso XII', color:'#1A1A1A', status:'pendiente' },
+    { hora:'18:50', nombre:'La Soledad de San Lorenzo', zona:'Pq. San Lorenzo · Plaza de San Lorenzo', color:'#2A2A5E', status:'pendiente' },
+  ],
+  res: [
+    { hora:'08:15', nombre:'La Resurrección', zona:'Iglesia Santa Marina y San Juan Bautista de La Salle · Macarena', color:'#C9A84C', status:'pendiente' },
+  ],
+};
+
+
+const statusLabel = { 'en-calle':'En calle', 'pendiente':'Pendiente', 'recogida':'Recogida' };
+
+function renderCofradias(day) {
+  const list = document.getElementById('cofradias-list');
+  const data = cofradiasData[day] || [];
+  list.innerHTML = data.map(c => `
+    <div class="cofradia-card">
+      <div class="cofradia-hora">${c.hora}</div>
+      <div class="cofradia-color" style="background:${c.color}"></div>
+      <div class="cofradia-info">
+        <div class="cofradia-nombre">${c.nombre}</div>
+        <div class="cofradia-meta">${c.zona}</div>
+      </div>
+      <span class="cofradia-status status-${c.status}">${statusLabel[c.status]}</span>
+    </div>
+  `).join('');
+}
+
+function selectDay(btn, day) {
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCofradias(day);
+}
+
+renderCofradias('dom');
+
+function toggleDropdown() {
+  const dd = document.getElementById('top-dropdown');
+  const btn = document.getElementById('menu-toggle-btn');
+  const open = dd.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+
+function switchTab(tab, icon, label) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.dropdown-item').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const btn = document.getElementById('btn-' + tab);
+  if (btn) btn.classList.add('active');
+  document.getElementById('menu-active-icon').textContent = icon;
+  document.getElementById('menu-active-name').textContent = label;
+  document.getElementById('top-dropdown').classList.remove('open');
+  document.getElementById('menu-toggle-btn').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.top-menu-bar')) {
+    document.getElementById('top-dropdown').classList.remove('open');
+    document.getElementById('menu-toggle-btn').classList.remove('open');
+  }
+});
+
+function openLink(url) {
+  window.open(url, '_blank');
+}
+
+function togglePdf(id) {
+  const card = document.getElementById(id);
+  const isActive = card.classList.contains('active');
+  document.querySelectorAll('.pdf-card').forEach(c => c.classList.remove('active'));
+  if (!isActive) card.classList.add('active');
+}
+
+function toggleYT(embedId, btn) {
+  const embed = document.getElementById(embedId);
+  const visible = embed.style.display !== 'none';
+  embed.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? '▶ Ver directo en app' : '✕ Cerrar directo';
+}
+
+function toggleWebcam(frameId, btnId) {
+  const frame = document.getElementById(frameId);
+  const btn = document.getElementById(btnId);
+  const open = frame.classList.toggle('open');
+  btn.textContent = open ? '✕ Cerrar cámara' : '▶ Ver en app';
+}
+
+// ── CÁMARAS TRÁFICO SEVILLA ──────────────────────────────
+const CAMARAS_SEVILLA = [
+  { id:'28',  nombre:'Plaza de Cuba',                              big: true  },
+  { id:'9',   nombre:'Puente Isabel II · Paseo Colón',             big: false },
+  { id:'34',  nombre:'Puente de San Telmo · Paseo Colón',          big: false },
+  { id:'8',   nombre:'Glorieta de los Marineros · Avda. Mª Luisa', big: false },
+  { id:'68',  nombre:'Glorieta San Diego',                          big: false },
+  { id:'2',   nombre:'Plaza de Armas',                              big: false },
+  { id:'94',  nombre:'San Jacinto · Pagés del Corro',               big: false },
+  { id:'93',  nombre:'Pagés del Corro · Plaza del Altozano',        big: false },
+  { id:'4',   nombre:'Macarena',                                    big: false },
+  { id:'6',   nombre:'Ronda de Capuchinos · Ctra. Carmona',         big: false },
+  { id:'57',  nombre:'Avda. Luis Montoto · Avda. de la Buhaira',    big: false },
+  { id:'73',  nombre:'Puerta de la Carne · Menéndez y Pelayo',      big: false },
+  { id:'1',   nombre:'Pasarela',                                    big: false },
+];
+
+function buildCamUrl(id) {
+  return 'https://trafico.sevilla.org/camaras/cam' + id + '.jpg?t=' + Date.now();
+}
+
+function renderCamGrid() {
+  const grid = document.getElementById('cam-grid');
+  if (!grid) return;
+  grid.innerHTML = CAMARAS_SEVILLA.map(c => `
+    <div class="cam-tile${c.big ? ' cam-big' : ''}" onclick="openLink('https://trafico.sevilla.org/')">
+      <img id="cam-img-${c.id}" src="${buildCamUrl(c.id)}" alt="${c.nombre}" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.opacity='0.4'" />
+      <div class="cam-tile-label">📷 ${c.nombre}</div>
+    </div>
+  `).join('');
+}
+
+function recargarCamaras() {
+  const btn = document.getElementById('cam-refresh-btn');
+  if (btn) { btn.textContent = '↻ Cargando...'; btn.disabled = true; }
+  CAMARAS_SEVILLA.forEach(c => {
+    const img = document.getElementById('cam-img-' + c.id);
+    if (img) { img.style.display = 'block'; img.src = buildCamUrl(c.id); }
+  });
+  const now = new Date();
+  const el = document.getElementById('cam-updated');
+  if (el) el.textContent = 'Actualizado: ' + now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) + ' h · trafico.sevilla.org';
+  setTimeout(() => { if (btn) { btn.textContent = '↻ Actualizar'; btn.disabled = false; } }, 1500);
+}
+
+renderCamGrid();
+recargarCamaras();
+setInterval(recargarCamaras, 60 * 1000);
+
+const streamUrls = {
+  'mc-1': 'https://rtva-live-radio.flumotion.com/rtva/csr.mp3',
+};
+
+let currentPlaying = null;
+let audioEl = null;
+
+function togglePlay(id, name) {
+  const card = document.getElementById(id);
+  const bar = document.getElementById('now-playing');
+  const npName = document.getElementById('np-name');
+  const playBtn = card.querySelector('.play-btn');
+
+  if (currentPlaying === id) {
+    if (audioEl) { audioEl.pause(); audioEl = null; }
+    card.classList.remove('playing');
+    playBtn.textContent = '▶';
+    bar.classList.remove('visible');
+    currentPlaying = null;
+    return;
+  }
+
+  if (currentPlaying) {
+    const prevCard = document.getElementById(currentPlaying);
+    if (prevCard) { prevCard.classList.remove('playing'); prevCard.querySelector('.play-btn').textContent = '▶'; }
+    if (audioEl) { audioEl.pause(); audioEl = null; }
+  }
+
+  if (streamUrls[id]) {
+    audioEl = new Audio(streamUrls[id]);
+    audioEl.play().catch(() => {});
+    playBtn.textContent = '⏸';
+  } else {
+    playBtn.textContent = '⏸';
+  }
+
+  card.classList.add('playing');
+  npName.textContent = name;
+  bar.classList.add('visible');
+  currentPlaying = id;
+}
+
+const recorridoData = {
+  // ── VIERNES DE DOLORES ──────────────────────────────────
+  'bellavista': { nombre:'Dulce Nombre de Bellavista', dia:'vdo', sal:'18:30', zona:'Bellavista', pasos:['Salida: Pq. Sagrado Corazón (Bellavista)','Itinerario urbano Bellavista','Regreso al templo'] },
+  'pinomontano': { nombre:'Pino Montano', dia:'vdo', sal:'19:00', zona:'Pino Montano', pasos:['Salida: Pq. Santa Genoveva (Pino Montano)','Itinerario barriada Pino Montano','Regreso al templo'] },
+  'corona': { nombre:'Cristo de la Corona', dia:'vdo', sal:'19:30', zona:'Triana', pasos:['Salida: Pq. Ntra. Sra. del Carmen (Triana)','Itinerario Triana','Regreso al templo'] },
+
+  // ── SÁBADO DE PASIÓN ────────────────────────────────────
+  'obrerobella': { nombre:'San José Obrero', dia:'spas', sal:'16:55', zona:'Bellavista', pasos:['Salida: Pq. San José Obrero (Bellavista)','Itinerario Bellavista','Regreso al templo'] },
+  'perdon': { nombre:'Divino Perdón', dia:'spas', sal:'18:00', zona:'Heliópolis', pasos:['Salida: Pq. Santa Genoveva (Heliópolis)','Itinerario Heliópolis','Regreso al templo'] },
+  'torreblanca': { nombre:'Jesús Cautivo de Torreblanca', dia:'spas', sal:'18:30', zona:'Torreblanca', pasos:['Salida: Pq. Ntra. Sra. Consolación (Torreblanca)','Itinerario Torreblanca','Regreso al templo'] },
+
+  // ── DOMINGO DE RAMOS ────────────────────────────────────
+  'borriquita': { nombre:'La Borriquita', dia:'dom', sal:'14:15', zona:'Centro', pasos:['Salida: Iglesia Colegial del Divino Salvador','Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Conteros · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero','Regreso: Plaza del Salvador'] },
+  'cena': { nombre:'La Cena', dia:'dom', sal:'14:00', zona:'Alfalfa', pasos:['Salida: Iglesia Ntra. Sra. de Consolación (Los Terceros)','Sol · Plaza de Los Terceros · Capataz Manuel Santiago · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Ángel Mª Camacho · Plaza de la Alfalfa · Odreros · Boteros','Regreso: Plaza del Cristo de Burgos · Doña María Coronel · Gerona · Capataz Manuel Santiago · Plaza de Los Terceros · Sol'] },
+  'despojado': { nombre:'Jesús Despojado', dia:'dom', sal:'14:20', zona:'Pl. de Molviedro', pasos:['Salida: Capilla del Mayor Dolor (Plaza de Molviedro)','Plaza de Molviedro · Adolfo Cuéllar · Fray Bartolomé de las Casas · Zaragoza · San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Santo Tomás · Adolfo Rodríguez Jurado · Plaza Ministro Indalecio Prieto · Tomás de Ibarra · Almirantazgo · Arco del Postigo · Dos de Mayo · Rodo · Real de la Carretería','Regreso: Toneleros · Antonia Díaz · Arfe · Puerta del Arenal · Castelar · Gamazo · Zaragoza · Fray Bartolomé de las Casas · Adolfo Cuéllar · Plaza de Molviedro'] },
+  'hiniesta': { nombre:'La Hiniesta', dia:'dom', sal:'13:45', zona:'Macarena', pasos:['Salida: Pq. Santa Marina','Plaza del Señor de la Resurrección · San Luis · Plaza del Pumarejo · Relator · Feria · Correduría · Amor de Dios · Plaza Alameda de Hércules · Trajano · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Argote de Molina · Álvarez Quintero · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros','Regreso: Sales y Ferré · Plaza de San Pedro · Doña María Coronel · Bustos Tavera · Plaza de San Marcos · San Luis · Santa Marina'] },
+  'paz': { nombre:'La Paz', dia:'dom', sal:'13:00', zona:'El Porvenir', pasos:['Salida: Pq. San Sebastián','Parroquia de San Sebastián · San Salvador · Río de la Plata · Porvenir · Progreso · Brasil · Avda. de la Borbolla · Glorieta de Covadonga · Avda. de Isabel la Católica · Glorieta del Cid · Palos de la Frontera · Avda. de Roma · Plaza Puerta de Jerez · Avda. de La Constitución','CARRERA OFICIAL: Santo Tomás · Plaza Ministro Indalecio Prieto · Tomás de Ibarra · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Harinas · Jimios · Joaquín Guichot · Barcelona · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','Regreso: Plaza del Triunfo · Joaquín Romero Murube · Miguel Mañara · Plaza de La Contratación · San Gregorio · Puerta de Jerez · Avda. de Roma · Parroquia de San Sebastián'] },
+  'sanroque': { nombre:'San Roque', dia:'dom', sal:'16:00', zona:'Pl. Carmen Benítez', pasos:['Salida: Pq. San Roque','Plaza Carmen Benítez · Recaredo · Puñonrostro · Jáuregui · Plaza Padre Jerónimo de Córdoba · Plaza Ponce de León · Juan de Mesa · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros','Regreso: Plaza de San Idelfonso · Caballerizas · Plaza de Pilatos · San Esteban · Medinaceli · Imperial · Calería · Juan de la Encina · Guadalupe · Recaredo · Plaza Carmen Benítez'] },
+  'estrella': { nombre:'La Estrella', dia:'dom', sal:'16:30', zona:'Triana', pasos:['Salida: Capilla de la Estrella (c/ San Jacinto) · Triana','Parroquia de San Jacinto · Pagés del Corro · Plaza del Altozano · Puente de Isabel II · Reyes Católicos · Puerta de Triana · San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Adriano · Pastor y Landero · Reyes Católicos','Regreso: Puente de Isabel II · Plaza del Altozano · San Jacinto'] },
+  'amargura': { nombre:'La Amargura', dia:'dom', sal:'19:00', zona:'Feria', pasos:['Salida: Iglesia filial San Juan Bautista (vulgo de la Palma)','San Juan de la Palma · Madre María Purísima de la Cruz · Feria · Conde de Torrejón · Amor de Dios · Alameda · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Contero · Argote de Molina · Placentines · Francos · Villegas · Plaza del Salvador · Cuna · Laraña','Regreso: Plaza de la Encarnación (lado este) · Alcázares · Santa Ángela de la Cruz · San Juan de la Palma'] },
+  'amor': { nombre:'El Amor', dia:'dom', sal:'20:15', zona:'Centro', pasos:['Salida: Iglesia Colegial del Divino Salvador (2ª parte)','Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Conteros · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero','Regreso: Plaza del Salvador'] },
+
+  // ── LUNES SANTO ─────────────────────────────────────────
+  'cautivo': { nombre:'El Cautivo', dia:'lun', sal:'11:15', zona:'Los Pajaritos', pasos:['Salida: Pq. San Ignacio de Loyola','C/ Señora del Rosario · Avda. de Pedro Romero · Doctor Laffón Soto · Avda. de la Soleá · Sinaí · Hernando del Pulgar · Luis Montoto · Puerta de Carmona · C/ San Esteban · Plaza de Pilatos · Águilas · C/ Alfalfa · Jesús de las Tres Caídas · Cuesta del Rosario · Villegas · Álvarez Quintero · Francisco Bruna · Plaza de San Francisco · Granada · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Alfalfa · Odreros · Boteros · Sales y Ferré · Plaza de San Pedro · Almirante Apodaca · Juan de Mesa · Plaza Ponce de León · Padre Jerónimo de Córdoba · Puñonrostro · Valle · Mateos · María Auxiliadora · José Laguillo · Pérez Hervás · Venecia · Antonio Filpo Rojas · Samaniego','Regreso: Puente sobre la vía del tren · Avda. de Kansas City · Avda. El Greco · Avda. de la Soleá · Doctor Laffón Soto · Avda. de Pedro Romero · C/ Señora del Rosario'] },
+  'besojudas': { nombre:'El Beso de Judas', dia:'lun', sal:'14:45', zona:'Casco Antiguo', pasos:['Salida: Iglesia de Santiago','Plaza de Jesús de la Redención · Santiago · Juan de Mesa · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Aponte · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Villegas · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos','Regreso: Dormitorio · Alhóndiga · Plaza de San Leandro · Cardenal Cervantes · Santiago · Plaza de Jesús de la Redención'] },
+  'stagenoveva': { nombre:'Santa Genoveva', dia:'lun', sal:'12:25', zona:'Heliópolis', pasos:['Salida: Pq. Ntra. Sra. de las Mercedes y Sta. Genoveva (Heliópolis)','Romero de Torres · Almirante Topete · C/ Nuestra Señora de las Mercedes · Felipe II · Diego de la Barrera · Porvenir · Río de la Plata · Brasil · Parque de María Luisa · Glorieta San Diego · Palos de la Frontera · Avda. de Roma · Plaza Puerta de Jerez · Avda. de La Constitución · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Gamazo · Joaquín Guichot · Barcelona · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Miguel Mañara · Plaza de La Contratación · San Gregorio · Plaza Puerta de Jerez · San Fernando · Cancela principal del Rectorado · Lonja de la Universidad','Regreso: Avda. El Cid · Glorieta San Diego · Parque de María Luisa · Felipe II · Bogotá · Pedro Salinas · Avda. Ramón Carande · Coullaut Valera · Avda. de Los Teatinos · Romero de Torres'] },
+  'stogonzalo': { nombre:'San Gonzalo', dia:'lun', sal:'15:00', zona:'Barrio León', pasos:['Salida: Pq. San Gonzalo','Plaza de San Gonzalo · Bienvenido Puelles Oliver · Dolores León · Avda. de Coria · San Jacinto · Plaza del Altozano · Puente de Isabel II · Reyes Católicos · Puerta de Triana · San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Joaquín Romero Murube · Santo Tomás · Santander · Tomás de Ibarra · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Adriano · Pastor y Landero · Reyes Católicos','Regreso: Puente de Isabel II · Plaza del Altozano · San Jacinto · Avda. de Coria · C/ Nuestra Señora de la Salud · Plaza de San Gonzalo'] },
+  'stmarta': { nombre:'Santa Marta', dia:'lun', sal:'18:10', zona:'Casco Antiguo', pasos:['Salida: Pq. San Andrés','C/ San Andrés · García Tassara · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna · Orfila','Regreso: Plaza Fernando de Herrera · Daoiz · C/ San Andrés'] },
+  'veracruz': { nombre:'Vera Cruz', dia:'lun', sal:'19:35', zona:'Casco Antiguo', pasos:['Salida: Capilla del Dulce Nombre de Jesús','C/ Jesús de la Vera-Cruz · Virgen de los Buenos Libros · Teniente Borges · Plaza de La Concordia · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Placentines · Francos · Villegas · Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Aponte · Jesús del Gran Poder · Las Cortes','Regreso: Plaza de La Concordia · Plaza de la Gavidia · Baños · C/ Jesús de la Vera-Cruz'] },
+  'penassanvicente': { nombre:'Las Penas de San Vicente', dia:'lun', sal:'20:00', zona:'Triana', pasos:['Salida: Pq. San Vicente','Cardenal Cisneros · San Vicente · Alfonso XII · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Placentines · Francos · Villegas · Plaza del Salvador · Sagasta · Jovellanos · Tetuán · Velázquez · O\'Donnell · Campana · Plaza del Duque de la Victoria','Regreso: Alfonso XII · Santa Vicenta María · Virgen de los Buenos Libros · Cardenal Cisneros'] },
+  'aguas': { nombre:'Las Aguas', dia:'lun', sal:'18:15', zona:'Arenal', pasos:['Salida: Cap. Ntra. Sra. del Rosario (c/ Dos de Mayo)','Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza · San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Santo Tomás · Adolfo Rodríguez Jurado · Plaza Ministro Indalecio Prieto · Tomás de Ibarra · Almirantazgo · Arco del Postigo','Regreso: Dos de Mayo'] },
+  'museo': { nombre:'El Museo', dia:'lun', sal:'20:40', zona:'Plaza del Museo', pasos:['Salida: Capilla del Museo','Plaza del Museo (la rodea completamente) · Alfonso XII · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · García de Vinuesa · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza · Gravina · Pedro del Toro · Bailén · Miguel de Carvajal','Regreso: Plaza del Museo (lado oeste)'] },
+
+  // ── MARTES SANTO ────────────────────────────────────────
+  'cerro': { nombre:'El Cerro', dia:'mar', sal:'11:40', zona:'Cerro del Águila', pasos:['Salida: Pq. Ntra. Sra. de los Dolores (Cerro del Águila)','Nuestra Señora de los Dolores · Afán de Ribera · Aragón · Avda. de Hytasa · Glorieta Bizco Amate · Ramón y Cajal · Enramadilla · Glorieta Doña María de las Mercedes · Carlos V · Plaza de Don Juan de Austria · San Fernando · Puerta de Jerez · Avda. de la Constitución · Almirantazgo · Arfe · Puerta del Arenal · García de Vinuesa · Fernández y González · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza Virgen de los Reyes · Alemanes · Cuesta del Bacalao · Francos · Chapineros · Álvarez Quintero · Villegas · Cuesta del Rosario · Jesús de las Tres Caídas · Alfalfa · Candilejo · Muñoz y Pabón · San José · Santa María la Blanca · Demetrio de los Ríos · Eduardo Dato · San Bernardo','Regreso: Gallinato · Almonacid · Smo. Cristo de la Salud · Campamento · Clara Campoamor · Avda. Buhaira · Ramón y Cajal · Avda. Hytasa · Aníbal González · Afán de Ribera · Ntra. Señora de los Dolores'] },
+  'stesteban': { nombre:'San Esteban', dia:'mar', sal:'14:40', zona:'Barrio San Esteban', pasos:['Salida: Iglesia de San Esteban','San Esteban · Plaza de Pilatos · Águilas · Rodríguez Marín · Plaza de San Ildefonso · Zamudio · Plaza de San Leandro · Alhóndiga · Dormitorio · Plaza del Cristo de Burgos · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Aponte · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Plaza de la Pescadería · Ángel Mª Camacho · Plaza de La Alfalfa · C/ Alfalfa · Águilas','Regreso: Plaza de Pilatos · San Esteban'] },
+  'candelaria': { nombre:'La Candelaria', dia:'mar', sal:'15:30', zona:'Casco Antiguo', pasos:['Salida: Pq. San Nicolás de Bari','Plaza Nuestro Padre Jesús de la Salud · Plaza Ramón Ybarra Llosent · Muñoz y Pabón · Cabeza del Rey Don Pedro · Candilejo · C/ Alfalfa · Plaza de La Alfalfa · Alcaicería de la Loza · Plaza Nuestro Padre Jesús de la Pasión · Villegas · Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria','CARRERA OFICIAL: Plaza del Triunfo (lado Catedral) · Miguel Mañara · Plaza de La Contratación · San Gregorio · Plaza Puerta de Jerez · San Fernando · Jardines de Murillo (paseo de Catalina de Ribera) · Cano y Cueto · Santa María la Blanca · San José','Regreso: Plaza Nuestro Padre Jesús de la Salud'] },
+  'stbenito': { nombre:'San Benito', dia:'mar', sal:'16:00', zona:'San Bernardo', pasos:['Salida: Pq. San Benito','San Benito · Luis Montoto · Puerta de Carmona · Muro de los Navarros · Santiago · Juan de Mesa · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Alfalfa · Águilas · Plaza de Pilatos','Regreso: San Esteban · Puerta de Carmona · Luis Montoto · San Benito'] },
+  'universidad': { nombre:'La Universidad (Buena Muerte)', dia:'mar', sal:'18:30', zona:'San Fernando', pasos:['Salida: Capilla de la Universidad','Lonja de la Universidad · Cancela principal del Rectorado · San Fernando · Plaza Puerta de Jerez · Avda. de la Constitución · Adolfo Rodríguez Jurado · Plaza del Ministro Indalecio Prieto · Tomás de Ibarra · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Gamazo · Zaragoza · Carlos Cañal · Méndez Núñez · Plaza de la Magdalena · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado Catedral) · Miguel Mañara · Plaza de La Contratación · San Gregorio · Plaza Puerta de Jerez · San Fernando','Regreso: Doña María de Padilla · Lonja de la Universidad'] },
+  'dulcenombre': { nombre:'Dulce Nombre (Los Estudiantes)', dia:'mar', sal:'19:22', zona:'San Lorenzo', pasos:['Salida: Pq. San Lorenzo','Plaza de San Lorenzo · Cardenal Spínola · Plaza de la Gavidia · Plaza de La Concordia · Las Cortes · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Salvador · Cuna · Orfila · Javier Lasso de la Vega · Amor de Dios · Delgado · Trajano · Santa Bárbara · Jesús del Gran Poder · Conde de Barajas','Regreso: Plaza de San Lorenzo'] },
+  'almas': { nombre:'Las Almas (Los Javieres)', dia:'mar', sal:'19:50', zona:'Gran Poder', pasos:['Salida: Iglesia del Sagrado Corazón (Jesuitas)','Jesús del Gran Poder · Santa Bárbara · Trajano · Plaza del Duque de la Victoria (margen izquierda)','CARRERA OFICIAL: Plaza Virgen de los Reyes · Plaza del Triunfo · Fray Ceferino González · Almirantazgo · Arfe · Puerta del Arenal · Castelar · Gamazo · Zaragoza · Badajoz · Plaza Nueva (margen Hotel Inglaterra) · Méndez Núñez · Plaza de la Magdalena · O\'Donnell · Campana · Plaza del Duque de la Victoria (margen El Corte Inglés)','Regreso: Jesús del Gran Poder'] },
+  'stcruz': { nombre:'Santa Cruz', dia:'mar', sal:'20:05', zona:'Barrio Santa Cruz', pasos:['Salida: Pq. Santa Cruz','Mateos Gago · Rodrigo Caro · Plaza de La Alianza · Joaquín Romero Murube · Plaza del Triunfo (lado Muralla) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Gamazo · Joaquín Guichot · Barcelona · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado Casa de la Provincia) · Joaquín Romero Murube · Plaza de La Alianza · Rodrigo Caro','Regreso: Mateos Gago'] },
+
+  // ── MIÉRCOLES SANTO ─────────────────────────────────────
+  'carmendoloroso': { nombre:'El Carmen Doloroso', dia:'mie', sal:'14:45', zona:'Feria', pasos:['Salida: Pq. Ómnium Sanctórum (C/ Feria)','Feria · Peris Mencheta · Mata · Belén · Plaza Alameda de Hércules (bulevar) · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Córdoba · Lineros · Puente y Pellón · Plaza de la Encarnación (lado oeste) · Alcázares · Santa Ángela de la Cruz · San Juan de la Palma · Madre María Purísima de la Cruz · Feria','Regreso: Guadiana · Peris Mencheta · Feria'] },
+  'buenfin': { nombre:'El Buen Fin', dia:'mie', sal:'15:00', zona:'San Vicente', pasos:['Salida: Iglesia San Antonio de Padua (Franciscanos)','San Vicente · Plaza de San Antonio de Padua · Marqués de la Mina · Alcoy · Eslava · Plaza de San Lorenzo · Conde de Barajas · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza · Gravina · Pedro del Toro · Bailén · Miguel de Carvajal · Plaza del Museo (lado oeste)','Regreso: San Vicente'] },
+  'sed': { nombre:'La Sed', dia:'mie', sal:'12:00', zona:'Nervión', pasos:['Salida: Pq. Concepción (Nervión) · C/ Cristo de la Sed','Cristo de la Sed · Cardenal Lluch · Avda. de Eduardo Dato · Hospital de San Juan de Dios · Avda. de Eduardo Dato · Jiménez Aranda · Luis Montoto · Puerta de Carmona · Muro de los Navarros · Santiago · Juan de Mesa · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · C/ Alfalfa · Águilas · Plaza de Pilatos · San Esteban · Puerta de Carmona · Luis Montoto · Benito Mas y Prat · Rico Cejudo · Goya · Alejandro Collantes · Cardenal Lluch','Regreso: Cristo de la Sed'] },
+  'stbernardo': { nombre:'San Bernardo', dia:'mie', sal:'14:15', zona:'San Bernardo', pasos:['Salida: Pq. San Bernardo','C/ Santísimo Cristo de la Salud · Gallinato · C/ San Bernardo · Avda. de Eduardo Dato · Puente de San Bernardo · Demetrio de los Ríos · Puerta de la Carne · Santa María la Blanca · San José · Plaza Ntro. P. Jesús de la Salud · Plaza Ramón Ybarra Llosent · Muñoz y Pabón · Cabeza del Rey Don Pedro · Candilejo · C/ Alfalfa · Plaza de La Alfalfa · Ángel Mª Camacho · Plaza de la Pescadería · Cuesta del Rosario · Villegas · Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Plaza del Triunfo · Joaquín Romero Murube · Plaza de La Alianza · Rodrigo Caro · Mateos Gago · Fabiola · Madre de Dios · San José · Santa María la Blanca · Puerta de la Carne · Demetrio de los Ríos · Puente de San Bernardo · Avda. de Eduardo Dato · C/ San Bernardo · Santo Rey','Regreso: C/ Santísimo Cristo de la Salud'] },
+  'lanzada': { nombre:'La Lanzada', dia:'mie', sal:'17:50', zona:'Plaza de San Martín', pasos:['Salida: Iglesia de San Martín','Plaza de San Martín · Saavedras · Alberto Lista · Conde de Torrejón · Europa · Amor de Dios · Plaza Alameda de Hércules · Trajano · Santa Bárbara · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna · Orfila · Plaza Fernando de Herrera · Daoiz · C/ San Andrés · Cervantes','Regreso: Plaza de San Martín'] },
+  'baratillo': { nombre:'El Baratillo', dia:'mie', sal:'17:10', zona:'Arenal', pasos:['Salida: Capilla de la Piedad (C/ Adriano)','Adriano · Pastor y Landero · Reyes Católicos · Puerta de Triana · San Pablo · Plaza de la Magdalena · Méndez Núñez · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Santo Tomás · Adolfo Rodríguez Jurado · Plaza Ministro Indalecio Prieto · Tomás de Ibarra · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe','Regreso: Adriano'] },
+  'panaderos': { nombre:'Los Panaderos', dia:'mie', sal:'19:45', zona:'Casco Antiguo', pasos:['Salida: Capilla de San Andrés (C/ Orfila)','Orfila · Plaza Fernando de Herrera · Daoiz · García Tassara · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste) · Alfonso XII','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna','Regreso: Orfila'] },
+  'ctoburgos': { nombre:'Cristo de Burgos', dia:'mie', sal:'19:25', zona:'Plaza de San Pedro', pasos:['Salida: Pq. San Pedro','Plaza de San Pedro · Santa Ángela · San Juan de la Palma · Feria · Castellar · Alberto Lista · Saavedras · Plaza de San Martín · Cervantes · Plaza de San Andrés · García Tassara · Amor de Dios · San Miguel · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Plaza de Jesús de la Pasión · Alcaicería de la Loza · Plaza de La Alfalfa · San Juan · Boteros · Sales y Ferré','Regreso: Plaza del Cristo de Burgos · Plaza de San Pedro'] },
+  'sietepalabras': { nombre:'Las Siete Palabras', dia:'mie', sal:'20:50', zona:'Casco Antiguo', pasos:['Salida: Pq. San Vicente','Cardenal Cisneros · C/ Jesús de la Vera-Cruz · Baños · Plaza de la Gavidia · Plaza de La Concordia · Las Cortes · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Hernando Colón · Plaza de San Francisco · Plaza Nueva · Tetuán · Velázquez · O\'Donnell · Campana · Plaza del Duque de la Victoria · Alfonso XII · Santa Vicenta María · Virgen de los Buenos Libros','Regreso: Cardenal Cisneros'] },
+
+  // ── JUEVES SANTO ────────────────────────────────────────
+  'negritos': { nombre:'Los Negritos', dia:'jue', sal:'15:00', zona:'Recaredo', pasos:['Salida: Capilla de los Ángeles','Recaredo · Plaza de San Agustín · Puerta de Carmona · San Esteban · Plaza de Pilatos · Águilas · C/ Alfalfa · Jesús de las Tres Caídas · Cuesta del Rosario · Villegas · Plaza del Salvador · Sagasta · Jovellanos · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Plaza de la Pescadería · Ángel Mª Camacho · Plaza de La Alfalfa · C/ Alfalfa · Águilas · Plaza de Pilatos · San Esteban · Puerta de Carmona · Muro de los Navarros · Guadalupe','Regreso: Recaredo'] },
+  'exaltacion': { nombre:'La Exaltación', dia:'jue', sal:'15:20', zona:'Casco Antiguo', pasos:['Salida: Pq. Santa Catalina','Santa Catalina · Gerona · Santa Ángela de la Cruz · Alcázares · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Aponte · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Villegas · Cuesta del Rosario · Plaza de la Pescadería · Ángel Mª Camacho · Plaza de la Alfalfa · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos · Almirante Apodaca · Alhóndiga','Regreso: Santa Catalina'] },
+  'cigarreras': { nombre:'Las Cigarreras', dia:'jue', sal:'17:00', zona:'Alfalfa', pasos:['Salida: Iglesia Ntra. Sra. de Consolación (Los Terceros)','Sol · Plaza de Los Terceros · Capataz Manuel Santiago · Alhóndiga · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Plaza del Triunfo · Miguel Mañara · Plaza de La Contratación · San Gregorio · Plaza Puerta de Jerez · San Fernando · Jardines de Murillo (paseo de Catalina de Ribera) · Cano y Cueto · Santa María la Blanca · San José · Plaza Ntro. P. Jesús de la Salud · Plaza Ramón Ybarra Llosent · Muñoz y Pabón · Cabeza del Rey Don Pedro · Candilejo · C/ Alfalfa · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos · Doña María Coronel · Bustos Tavera','Regreso: Plaza de Los Terceros · Sol'] },
+  'montesion': { nombre:'Montesión', dia:'jue', sal:'17:30', zona:'Feria', pasos:['Salida: Capilla de Monte Sión','Feria · Correduría · Alameda de Hércules · Trajano · Conde Barajas · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna · Laraña · Plaza de la Encarnación · Alcázares · Santa Ángela de la Cruz · San Juan de la Palma · Madre María Purísima de la Cruz','Regreso: Feria'] },
+  'valle': { nombre:'El Valle', dia:'jue', sal:'19:30', zona:'Laraña', pasos:['Salida: Iglesia de la Anunciación (Laraña)','Laraña · Orfila · Plaza Fernando de Herrera · Daoiz · García Tassara · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna','Regreso: Laraña'] },
+  'quintaangustia': { nombre:'Quinta Angustia', dia:'jue', sal:'19:36', zona:'Centro', pasos:['Salida: Pq. Santa María Magdalena','San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza','Regreso: San Pablo'] },
+  'pasion': { nombre:'La Pasión', dia:'jue', sal:'20:20', zona:'Centro', pasos:['Salida: Iglesia Colegial del Divino Salvador','Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Amor de Dios · San Miguel · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Villegas','Regreso: Plaza del Salvador'] },
+
+  // ── MADRUGÁ ─────────────────────────────────────────────
+  'macarena': { nombre:'La Esperanza Macarena', dia:'mad', sal:'00:00', zona:'Macarena', pasos:['Salida: Basílica de la Macarena (00:00 h)','Plaza de la Esperanza Macarena · Resolana · Feria · Correduría · Plaza Alameda de Hércules · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Villegas · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos (lado oeste) · Plaza de San Pedro · Santa Ángela de la Cruz · San Juan de la Palma · Madre María Purísima de la Cruz · Feria · Relator · Parras · Escoberos · Muro · Resolana · Don Fadrique · Arco de la Macarena','Regreso: Plaza de la Esperanza Macarena'] },
+  'granpoder': { nombre:'El Gran Poder', dia:'mad', sal:'00:35', zona:'San Lorenzo', pasos:['Salida: Basílica Ntro. Padre Jesús del Gran Poder (00:35 h)','Plaza de San Lorenzo · Conde de Barajas · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste)','CARRERA OFICIAL: Plaza del Triunfo (lado del Alcázar) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Adriano · López de Arenas · Santas Patronas · Puerta de Triana · Gravina · Pedro del Toro · Bailén · Miguel de Carvajal · Plaza del Museo (lado oeste) · San Vicente · Cardenal Cisneros · C/ Jesús de la Vera-Cruz · Baños · Plaza de la Gavidia · Cardenal Spínola','Regreso: Plaza de San Lorenzo'] },
+  'silencio': { nombre:'El Silencio', dia:'mad', sal:'00:45', zona:'Alfonso XII', pasos:['Salida: Real Iglesia de San Antonio Abad (00:45 h)','C/ El Silencio · Alfonso XII · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Villegas · Plaza del Salvador · Cuna · Orfila · Plaza Fernando de Herrera · Daoiz · García Tassara · Amor de Dios · San Miguel · Jesús del Gran Poder · Plaza del Duque de la Victoria (lado oeste) · Alfonso XII','Regreso: C/ El Silencio'] },
+  'triana': { nombre:'Esperanza de Triana', dia:'mad', sal:'01:19', zona:'Triana', pasos:['Salida: Capilla de los Marineros (c/ Pureza) · Triana (01:19 h)','Pureza · Plaza del Altozano · Puente de Isabel II · Reyes Católicos · Puerta de Triana · Zaragoza · Madrid · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Adriano · Pastor y Landero · Reyes Católicos · Puente de Isabel II · Plaza del Altozano · San Jacinto · Victoria · Rodrigo de Triana · Plazuela de Santa Ana · Párroco Don Eugenio','Regreso: Pureza'] },
+  'calvario': { nombre:'El Calvario', dia:'mad', sal:'04:05', zona:'Centro', pasos:['Salida: Pq. La Magdalena (04:05 h)','San Pablo · Murillo · Plaza de la Magdalena · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza','Regreso: San Pablo'] },
+
+  // ── VIERNES SANTO ───────────────────────────────────────
+  'mortaja': { nombre:'La Sagrada Mortaja', dia:'vie', sal:'02:30', zona:'Casco Antiguo', pasos:['Salida: Cap. ex conv. de la Paz · Bustos Tavera (02:30 h)','Bustos Tavera · Doña María Coronel · Dueñas · San Juan de la Palma · Madre María Purísima de la Cruz · Feria · Castellar · Alberto Lista · Saavedra · Plaza de San Martín · Cervantes · C/ San Andrés · García Tassara · Amor de Dios · San Miguel · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos · Doña María Coronel','Regreso: Bustos Tavera'] },
+  'cachorro': { nombre:'El Cachorro', dia:'vie', sal:'15:35', zona:'Triana', pasos:['Salida: Basílica Smo. Cristo de la Expiración · Triana (15:35 h)','Castilla · Callao · San Jorge · Plaza del Altozano · Puente de Isabel II · Reyes Católicos · Puerta de Triana · San Pablo · Plaza de la Magdalena · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Adriano · Pastor y Landero · Reyes Católicos · Puente de Isabel II · Plaza del Altozano · San Jorge · Callao','Regreso: Castilla'] },
+  'carreteria': { nombre:'La Carretería', dia:'vie', sal:'16:40', zona:'Real de la Carretería', pasos:['Salida: Capilla de la Carretería (16:40 h)','C/ Real de la Carretería · Toneleros · Antonia Díaz · Arfe · Puerta del Arenal · Castelar · Gamazo · Joaquín Guichot · Barcelona · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Santo Tomás · Adolfo Rodríguez Jurado · Santander · Temprado · Dos de Mayo · Rodo','Regreso: C/ Real de la Carretería'] },
+  'soledadsanbuen': { nombre:'La Soledad de San Buenaventura', dia:'vie', sal:'17:50', zona:'Carlos Cañal', pasos:['Salida: Conv. San Buenaventura (PP. Franciscanos) · C/ Carlos Cañal (17:50 h)','Carlos Cañal · Zaragoza · Madrid · Plaza Nueva · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza','Regreso: Carlos Cañal'] },
+  'lao': { nombre:'La O', dia:'vie', sal:'18:00', zona:'Triana', pasos:['Salida: Pq. Ntra. Sra. de la O · Triana (18:00 h)','Castilla · Callao · San Jorge · Plaza del Altozano · Puente de Isabel II · Reyes Católicos · Puerta de Triana · San Pablo · Plaza de la Magdalena · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Santo Tomás · Adolfo Rodríguez Jurado · Santander · Temprado · Dos de Mayo · Rodo · C/ Real de la Carretería · Toneleros · Adriano · Pastor y Landero · Reyes Católicos · Puente de Isabel II · Plaza del Altozano · San Jorge · Callao','Regreso: Castilla'] },
+  'sanisidoro': { nombre:'San Isidoro', dia:'vie', sal:'19:40', zona:'Casco Antiguo', pasos:['Salida: Pq. San Isidoro (19:40 h)','Luchana · Cuesta del Rosario · Villegas · Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Tarifa · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Placentines · Francos · Cuesta del Rosario','Regreso: Luchana'] },
+  'montserrat': { nombre:'Montserrat', dia:'vie', sal:'20:30', zona:'Cristo del Calvario', pasos:['Salida: Capilla de Montserrat · C/ Cristo del Calvario (20:30 h)','C/ Cristo del Calvario · San Pablo · Murillo · Plaza de la Magdalena (lado del Hotel Radisson Collection) · Rioja · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo (lado de la Catedral) · Fray Ceferino González · Almirantazgo · Arco del Postigo · Dos de Mayo · Arfe · Puerta del Arenal · Castelar · Plaza de Molviedro · Doña Guiomar · Zaragoza · San Pablo','Regreso: C/ Cristo del Calvario'] },
+
+  // ── SÁBADO SANTO ────────────────────────────────────────
+  'sol': { nombre:'El Sol', dia:'sab', sal:'12:45', zona:'Plaza del Aljarafe', pasos:['Salida: Pq. San Diego de Alcalá · Plaza del Aljarafe (12:45 h)','Plaza del Aljarafe · C/ Virgen del Sol · Avda. Ramón y Cajal · Enramadilla · Glorieta Doña María de las Mercedes · Avda. Carlos V · Plaza Don Juan de Austria · Jardines de Murillo (paseo de Catalina de Ribera) · Cano y Cueto · Santa María la Blanca · San José · Plaza Ntro. P. Jesús de la Salud · Muñoz y Pabón · Cabeza del Rey Don Pedro · Candilejo · C/ Alfalfa · Jesús de las Tres Caídas · Cuesta del Rosario · Villegas · Plaza del Salvador · Sagasta · Jovellanos · Tetuán · Velázquez · O\'Donnell','CARRERA OFICIAL: Plaza del Triunfo · Miguel Mañara · Plaza de La Contratación · San Gregorio · Plaza Puerta de Jerez · San Fernando · Plaza Don Juan de Austria · Avda. Carlos V · Glorieta Doña María de las Mercedes · Enramadilla · Avión Cuatro Vientos · C/ Virgen del Sol','Regreso: Plaza del Aljarafe'] },
+  'servitas': { nombre:'Los Servitas', dia:'sab', sal:'15:15', zona:'Siete Dolores', pasos:['Salida: Cap. Ntra. Sra. de los Dolores · C/ Siete Dolores (15:15 h)','C/ Siete Dolores de Nuestra Señora · Plaza de San Marcos · Bustos Tavera · Doña María Coronel · Dueñas · Santa Ángela de la Cruz · Alcázares · Plaza de la Encarnación (lado este del mercado · puerta norte · puerta oeste) · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos · Doña María Coronel · Bustos Tavera · Plaza de San Marcos · Vergara · Plaza de Santa Isabel','Regreso: C/ Siete Dolores de Nuestra Señora'] },
+  'trinidad': { nombre:'La Trinidad', dia:'sab', sal:'15:05', zona:'María Auxiliadora', pasos:['Salida: Basílica de María Auxiliadora (15:05 h)','Compás de la Basílica · María Auxiliadora · Mateos · Valle · Puñonrostro · Jáuregui · Plaza Padre Jerónimo de Córdoba · Plaza Ponce de León · Juan de Mesa · Almirante Apodaca · Plaza de San Pedro · Imagen · Plaza de la Encarnación · Laraña · Orfila · Javier Lasso de la Vega · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Plaza de San Ildefonso · Zamudio · Plaza de San Leandro · Francisco Carrión Mejías · Juan de Mesa · Plaza Ponce de León · Escuelas Pías · Plaza Padre Jerónimo de Córdoba · Jáuregui · Puñonrostro · Valle · Verónica · Cristo de las Cinco Llagas · Sol · Madre Isabel de la Trinidad · María Auxiliadora','Regreso: Compás de la Basílica'] },
+  'stoentierro': { nombre:'Santo Entierro Grande', dia:'sab', sal:'18:45', zona:'Alfonso XII', pasos:['Salida: Conv. San Gregorio (PP. Mercedarios) · Alfonso XII (18:45 h)','Alfonso XII · Plaza del Duque de la Victoria','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Hernando Colón · Plaza de San Francisco · Plaza Nueva (andén del Ayuntamiento) · Tetuán · Velázquez · O\'Donnell · Campana · Plaza del Duque de la Victoria','Regreso: Alfonso XII'] },
+  'soledadsanloren': { nombre:'La Soledad de San Lorenzo', dia:'sab', sal:'18:50', zona:'Plaza de San Lorenzo', pasos:['Salida: Pq. San Lorenzo · Plaza de San Lorenzo (18:50 h)','Plaza de San Lorenzo · Conde de Barajas · Jesús del Gran Poder · San Miguel · Trajano · Plaza del Duque de la Victoria (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Chapineros · Álvarez Quintero · Plaza del Salvador · Cuna · Orfila · Javier Lasso de la Vega · Aponte · Jesús del Gran Poder · Las Cortes · Plaza de La Concordia · Plaza de la Gavidia (lado oeste) · Cardenal Spínola','Regreso: Plaza de San Lorenzo'] },
+
+  // ── DOMINGO DE RESURRECCIÓN ──────────────────────────────
+  'resurreccion': { nombre:'La Resurrección', dia:'res', sal:'08:15', zona:'Macarena', pasos:['Salida: Iglesia Santa Marina y San Juan Bautista de La Salle · Macarena (08:15 h)','Plaza del Señor de la Resurrección · San Luis · Relator · Alameda de Hércules (carril de emergencia) · Trajano · Conde de Barajas · Jesús del Gran Poder · Plaza del Duque (lado este)','CARRERA OFICIAL: Cardenal Carlos Amigo · Alemanes · Álvarez Quintero · Argote de Molina · Placentines · Francos · Cuesta del Rosario · Jesús de las Tres Caídas · Odreros · Boteros · Sales y Ferré · Plaza del Cristo de Burgos (lado oeste) · Doña María Coronel · Bustos Tavera · Plaza de San Marcos · San Luis','Regreso: Plaza del Señor de la Resurrección'] },
+};
+
+const recorridosByDay = {};
+Object.entries(recorridoData).forEach(([key, v]) => {
+  if (!recorridosByDay[v.dia]) recorridosByDay[v.dia] = [];
+  recorridosByDay[v.dia].push({ key, ...v });
+});
+
+function filterRecorridos(day) {
+  const sel = document.getElementById('recorrido-sel');
+  const entries = day === 'all' ? Object.entries(recorridoData) : Object.entries(recorridoData).filter(([,v]) => v.dia === day);
+  sel.innerHTML = entries.map(([k, v]) => `<option value="${k}">${v.nombre}</option>`).join('');
+  if (entries.length) updateRecorrido(entries[0][0]);
+}
+
+function updateRecorrido(key) {
+  const d = recorridoData[key];
+  if (!d) return;
+  document.getElementById('stat-sal').textContent = d.sal;
+  document.getElementById('stat-rec').textContent = d.rec;
+  document.getElementById('stat-zona').textContent = d.zona.split(' ')[0];
+  document.getElementById('pasos-list').innerHTML = d.pasos.map((p, i) => `
+    <div class="paso-item">
+      <div class="paso-num">${i+1}</div>
+      <div class="paso-lugar" style="flex:1">${p}</div>
+      ${i === 0 ? '<span class="paso-live">SALIDA</span>' : ''}
+    </div>
+  `).join('');
+}
+
+filterRecorridos('dom');
+
+// ── VOCABULARIO COFRADE ──────────────────────────────────
+const vocabData = [
+  { term:'Capataz', cat:'Personas', def:'Persona que dirige y ordena los movimientos del paso mediante llamadas con el badajo.', extra:'Es la máxima autoridad dentro del paso. Sus instrucciones son obedecidas por los costaleros al instante.' },
+  { term:'Costalero', cat:'Personas', def:'Persona que carga el paso sobre sus hombros desde dentro, sin ser visto por el público.', extra:'Van encorvados bajo las trabajaderas, usando el cuello y los hombros. Es un gran sacrificio físico y espiritual.' },
+  { term:'Nazareno', cat:'Personas', def:'Penitente que acompaña la procesión vestido con túnica, capirote y antifaz.', extra:'Cada hermandad tiene sus colores propios. Algunos portan cirios, otros cruces o insignias.' },
+  { term:'Hermano Mayor', cat:'Personas', def:'Máxima autoridad de la hermandad, elegido por los hermanos para dirigirla.', extra:'Representa a la hermandad ante el Consejo de Hermandades y la Iglesia.' },
+  { term:'Prioste', cat:'Personas', def:'Responsable del cuidado y adorno de los pasos, imágenes y enseres de la hermandad.', extra:'Coordina el montaje del paso y vela por la conservación del patrimonio artístico.' },
+  { term:'Diputado de Tramo', cat:'Personas', def:'Hermano encargado de organizar y mantener el orden en su tramo de nazarenos.', extra:'Controla que los penitentes guarden el protocolo y el ritmo de la marcha.' },
+  { term:'Acólito', cat:'Personas', def:'Persona que asiste en las funciones litúrgicas y acompaña al sacerdote durante la estación.', extra:'Suelen ir vestidos con roquete blanco y procesionan junto a la cruz de guía.' },
+  { term:'Paso', cat:'Pasos', def:'Estructura portátil sobre la que se transporta la imagen o escena religiosa durante la procesión.', extra:'Hay pasos de misterio (con escenas) y pasos de palio o de Virgen. Están exquisitamente ornamentados.' },
+  { term:'Paso de misterio', cat:'Pasos', def:'Paso que representa una escena de la Pasión de Cristo con varias imágenes talladas.', extra:'Pueden llevar hasta diez o más figuras y suelen ser los más grandes y pesados.' },
+  { term:'Paso de palio', cat:'Pasos', def:'Paso que porta a la Virgen bajo un palio bordado sostenido por varales.', extra:'El palio es el elemento más distintivo de la iconografía mariana sevillana.' },
+  { term:'Palio', cat:'Pasos', def:'Dosel bordado que cubre a la imagen de la Virgen en su paso, sostenido por varales.', extra:'Los palios suelen estar ricamente bordados en oro y plata, obra de meses o años de trabajo.' },
+  { term:'Varal', cat:'Pasos', def:'Cada una de las barras metálicas verticales que sostienen el palio.', extra:'Suelen ser de plata maciza o plateada. Algunos tienen una antigüedad de siglos.' },
+  { term:'Canasto', cat:'Pasos', def:'Estructura inferior del paso sobre la que descansan las imágenes y los adornos florales.', extra:'Es de madera tallada y suele ir dorado o plateado con motivos barrocos.' },
+  { term:'Simpecado', cat:'Pasos', def:'Estandarte bordado que precede al paso de la Virgen con su imagen y el lema de la hermandad.', extra:'Históricamente era el único elemento que salía en procesión antes de los pasos actuales.' },
+  { term:'Cruz de guía', cat:'Pasos', def:'Cruz que abre el cortejo de la hermandad, anunciando el inicio de la procesión.', extra:'Suele ser de plata y su aparición marca el comienzo oficial de la procesión.' },
+  { term:'Senatus', cat:'Pasos', def:'Bandera o insignia con la leyenda SPQR que acompaña a la cruz de guía al inicio del cortejo.', extra:'Hace referencia a la condena romana de Cristo: Senatus Populusque Romanus.' },
+  { term:'Trabajadera', cat:'Elementos', def:'Viga de madera transversal colocada bajo el paso donde los costaleros apoyan el cuello para cargarlo.', extra:'Es el elemento más importante para los costaleros. Su altura determina la postura de carga.' },
+  { term:'Badajo', cat:'Elementos', def:'Palo corto con el que el capataz golpea el paso para dar señales a los costaleros.', extra:'Los golpes tienen un código: uno para parar, dos para levantar, tres para marchar, entre otros.' },
+  { term:'Llamador', cat:'Elementos', def:'Pieza decorativa en el frontal del paso donde el capataz golpea con el badajo.', extra:'Suele tener forma de escudo, corazón o elemento religioso y es una joya artística en sí mismo.' },
+  { term:'Faldón', cat:'Elementos', def:'Tela bordada que cuelga alrededor del paso ocultando los costaleros o las ruedas.', extra:'Está bordado con motivos propios de la hermandad y puede valer millones de euros.' },
+  { term:'Ciriales', cat:'Elementos', def:'Candelabros portátiles que llevan los acólitos flanqueando el paso o la cruz de guía.', extra:'Marcan el rango litúrgico de la procesión. Los más importantes llevan ciriales de plata.' },
+  { term:'Bocina', cat:'Elementos', def:'Instrumento en forma de cuerno usado para hacer señales durante la procesión.', extra:'Tiene un sonido grave y potente. Se usa para anunciar la salida o llegada al templo.' },
+  { term:'Marcha procesional', cat:'Música', def:'Composición musical específica para acompañar el paso de una cofradía en su procesión.', extra:'Algunas marchas son tan famosas como las propias hermandades: La Macarena, Pasan los Campanilleros…' },
+  { term:'Saeta', cat:'Música', def:'Cante flamenco improvisado que se lanza desde un balcón al paso de una imagen.', extra:'Es uno de los momentos más emocionantes. El paso se detiene y reina el silencio absoluto.' },
+  { term:'Banda de cornetas y tambores', cat:'Música', def:'Agrupación musical de cornetas y tambores que acompaña el cortejo con marchas propias.', extra:'Tienen un sonido más austero y marcial. Muy habituales en hermandades penitenciales.' },
+  { term:'Banda de música', cat:'Música', def:'Agrupación con instrumentos de viento y percusión que interpreta marchas procesionales.', extra:'Algunas tienen fama internacional: Real Banda de CC y TT de Sevilla, Banda La Palma…' },
+  { term:'Estación de penitencia', cat:'Procesión', def:'Recorrido que realiza la hermandad desde su templo hasta la Catedral y de vuelta, como acto de penitencia.', extra:'Todas las hermandades deben pasar obligatoriamente por la Carrera Oficial.' },
+  { term:'Carrera Oficial', cat:'Procesión', def:'Tramo central: Campana, Sierpes, Plaza San Francisco, Constitución y Catedral, por donde pasan todas las hermandades.', extra:'Aquí se instalan palcos y sillas de pago. Es el punto de mayor afluencia de público.' },
+  { term:'Levantá', cat:'Procesión', def:'Momento en que los costaleros levantan el paso del suelo para iniciar la marcha.', extra:'La levantá de la Macarena o el Gran Poder es un momento de enorme emoción para los sevillanos.' },
+  { term:'Chicotá', cat:'Procesión', def:'Cada uno de los tramos de recorrido que realiza el paso entre parada y parada.', extra:'Los costaleros descansan entre chicotás. Las cuestas y el viento las hacen más duras.' },
+  { term:'Media voz', cat:'Procesión', def:'Instrucciones que el capataz da en voz baja a los costaleros sin usar el badajo.', extra:'Permite comunicarse con los trabajadores sin llamar la atención del público.' },
+  { term:'Salida falsa', cat:'Procesión', def:'Cuando el paso sale del templo pero debe entrar de nuevo, generalmente por lluvia.', extra:'Uno de los momentos más dramáticos. La imagen entra sin haber completado su estación.' },
+  { term:'Madrugá', cat:'Procesión', def:'Noche del Jueves al Viernes Santo, considerada el momento cumbre de la Semana Santa sevillana.', extra:'En la Madrugá salen El Silencio, El Gran Poder, La Macarena, El Calvario, Esperanza de Triana y Los Gitanos.' },
+  { term:'Cabildo de toma de horas', cat:'Procesión', def:'Reunión oficial donde las hermandades fijan su hora de salida y recorrido para la Semana Santa.', extra:'Se celebra en la Catedral de Sevilla y marca el inicio de la organización de la Semana Santa.' },
+  { term:'Túnica', cat:'Vestimenta', def:'Vestido largo que cubre al nazareno de pies a cabeza durante la procesión.', extra:'Cada hermandad tiene su color y corte propios. Puede ser de cola o sin ella.' },
+  { term:'Capirote', cat:'Vestimenta', def:'Gorro cónico alto que caracteriza al nazareno sevillano.', extra:'Su origen es medieval. Simboliza penitencia y fue adoptado como señal de redención.' },
+  { term:'Antifaz', cat:'Vestimenta', def:'Pieza de tela que cubre el rostro del nazareno, dejando solo los ojos al descubierto.', extra:'Simboliza el anonimato de la penitencia: solo Dios sabe quién está detrás del antifaz.' },
+  { term:'Cíngulo', cat:'Vestimenta', def:'Cordón o faja que ciñe la túnica del nazareno a la cintura.', extra:'Puede ser de esparto, seda o cuerda, según la hermandad.' },
+  { term:'Escapulario', cat:'Vestimenta', def:'Pieza de tela que llevan algunos nazarenos sobre la túnica con la imagen o escudo de la hermandad.', extra:'Se lleva sobre el pecho y la espalda. Diferente al capirote.' },
+];
+
+const vocabCats = ['Todas', ...new Set(vocabData.map(v => v.cat))];
+let activeVocabCat = 'Todas';
+
+function renderVocabCats() {
+  document.getElementById('vocab-cats').innerHTML = vocabCats.map(c => `
+    <button class="vocab-cat-btn ${c === activeVocabCat ? 'active' : ''}" onclick="setVocabCat('${c}')">${c}</button>
+  `).join('');
+}
+
+function setVocabCat(cat) {
+  activeVocabCat = cat;
+  renderVocabCats();
+  filterVocab();
+}
+
+function filterVocab() {
+  const q = (document.getElementById('vocab-search').value || '').toLowerCase().trim();
+  const filtered = vocabData.filter(v => {
+    const matchCat = activeVocabCat === 'Todas' || v.cat === activeVocabCat;
+    const matchQ = !q || v.term.toLowerCase().includes(q) || v.def.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  }).sort((a,b) => a.term.localeCompare(b, 'es'));
+
+  document.getElementById('vocab-count').textContent = filtered.length + ' término' + (filtered.length !== 1 ? 's' : '');
+
+  const list = document.getElementById('vocab-list');
+  if (!filtered.length) {
+    list.innerHTML = '<div class="vocab-empty">No se encontraron términos</div>';
+    return;
+  }
+  list.innerHTML = filtered.map((v, i) => `
+    <div class="vocab-item" id="vi-${i}" onclick="toggleVocabItem('vi-${i}')">
+      <div class="vocab-header">
+        <span class="vocab-term">${v.term}</span>
+        <span class="vocab-cat-tag">${v.cat}</span>
+      </div>
+      <div class="vocab-def">${v.def}</div>
+      <div class="vocab-extra">${v.extra}</div>
+    </div>
+  `).join('');
+}
+
+function toggleVocabItem(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+renderVocabCats();
+filterVocab();
+
+// ── AGENDA & ALERTAS — Actualización automática ──────────────────────────────
+
+const TIPO_LABELS = { viacrucis:'Vía Crucis', besapies:'Besapiés', culto:'Culto', pregon:'Pregón', procesion:'Procesión', traslado:'Traslado', quinario:'Quinario', triduo:'Triduo' };
+
+// Agenda completa de actos 2026
+const AGENDA_COMPLETA = [
+  { fecha:'2026-02-14', tipo:'pregon', nombre:'Pregón de la Semana Santa', lugar:'Teatro de la Maestranza', hora:'21:00 h' },
+  { fecha:'2026-02-22', tipo:'viacrucis', nombre:'Vía Crucis del Consejo de Hermandades', lugar:'Cruz del Campo → Catedral', hora:'20:00 h' },
+  { fecha:'2026-03-06', tipo:'culto', nombre:'Quinario al Stmo. Cristo del Gran Poder', lugar:'Basílica del Gran Poder', hora:'19:30 h' },
+  { fecha:'2026-03-07', tipo:'culto', nombre:'Quinario al Stmo. Cristo del Gran Poder', lugar:'Basílica del Gran Poder', hora:'19:30 h' },
+  { fecha:'2026-03-08', tipo:'culto', nombre:'Quinario al Stmo. Cristo del Gran Poder', lugar:'Basílica del Gran Poder', hora:'19:30 h' },
+  { fecha:'2026-03-09', tipo:'culto', nombre:'Quinario al Stmo. Cristo del Gran Poder', lugar:'Basílica del Gran Poder', hora:'19:30 h' },
+  { fecha:'2026-03-10', tipo:'culto', nombre:'Quinario al Stmo. Cristo del Gran Poder', lugar:'Basílica del Gran Poder', hora:'19:30 h' },
+  { fecha:'2026-03-13', tipo:'besapies', nombre:'Besapiés a la Stma. Imagen de la Macarena', lugar:'Basílica de la Macarena', hora:'10:00–22:00 h' },
+  { fecha:'2026-03-14', tipo:'besapies', nombre:'Besapiés al Stmo. Cristo de Burgos', lugar:'Iglesia de San Pedro', hora:'10:00–21:00 h' },
+  { fecha:'2026-03-15', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-16', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-17', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-18', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-19', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-20', tipo:'culto', nombre:'Septenario a la Esperanza de Triana', lugar:'Capilla de los Marineros', hora:'19:00 h' },
+  { fecha:'2026-03-21', tipo:'culto', nombre:'Septenario a la Esperanza de Triana · Función Principal', lugar:'Capilla de los Marineros', hora:'11:00 h' },
+  { fecha:'2026-03-21', tipo:'viacrucis', nombre:'Vía Crucis Penitencial del Consejo', lugar:'Catedral de Sevilla', hora:'20:30 h' },
+  { fecha:'2026-03-22', tipo:'besapies', nombre:'Besapiés a la Ntra. Sra. de la Amargura', lugar:'Iglesia San Juan de la Palma', hora:'11:00–21:00 h' },
+  { fecha:'2026-03-23', tipo:'traslado', nombre:'Traslado del Gran Poder a la Catedral', lugar:'Basílica Gran Poder → Catedral', hora:'09:00 h' },
+  { fecha:'2026-03-25', tipo:'culto', nombre:'Función Litúrgica por la Anunciación del Señor', lugar:'Catedral de Sevilla', hora:'12:00 h' },
+  { fecha:'2026-03-26', tipo:'viacrucis', nombre:'Vía Crucis de la Hermandad del Silencio', lugar:'Real Iglesia de San Antonio Abad', hora:'21:00 h' },
+  { fecha:'2026-03-27', tipo:'procesion', nombre:'Viernes de Dolores — 3 hermandades de barrios', lugar:'Barrios de Sevilla', hora:'Desde 18:30 h' },
+  { fecha:'2026-03-28', tipo:'procesion', nombre:'Sábado de Pasión — 3 hermandades de barrios', lugar:'Barrios de Sevilla', hora:'Desde 16:55 h' },
+  { fecha:'2026-03-29', tipo:'procesion', nombre:'Domingo de Ramos — 9 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 13:00 h' },
+  { fecha:'2026-03-30', tipo:'procesion', nombre:'Lunes Santo — 9 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 11:15 h' },
+  { fecha:'2026-03-31', tipo:'procesion', nombre:'Martes Santo — 8 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 11:40 h' },
+  { fecha:'2026-04-01', tipo:'procesion', nombre:'Miércoles Santo — 9 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 12:00 h' },
+  { fecha:'2026-04-02', tipo:'procesion', nombre:'Jueves Santo — 7 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 15:00 h' },
+  { fecha:'2026-04-03', tipo:'procesion', nombre:'La Madrugá — 5 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 00:00 h' },
+  { fecha:'2026-04-03', tipo:'procesion', nombre:'Viernes Santo (tarde) — 7 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 02:30 h' },
+  { fecha:'2026-04-04', tipo:'procesion', nombre:'Sábado Santo — 5 hermandades', lugar:'Carrera Oficial · Catedral', hora:'Desde 12:45 h' },
+  { fecha:'2026-04-05', tipo:'procesion', nombre:'Domingo de Resurrección — La Resurrección', lugar:'Carrera Oficial · Catedral', hora:'08:15 h' },
+  { fecha:'2026-04-06', tipo:'culto', nombre:'Misa de Acción de Gracias del Consejo', lugar:'Catedral de Sevilla', hora:'12:00 h' },
+];
+
+// Alertas estáticas por jornada + tiempo dinámico
+const ALERTAS_JORNADA = {
+  '2026-03-27': [{ tipo:'info', icono:'🕯️', titulo:'Viernes de Dolores', texto:'Hoy salen las hermandades de barrios: Dulce Nombre de Bellavista (18:30), Pino Montano (19:00) y Cristo de la Corona (19:30).', fuente:'Programa Oficial 2026' }],
+  '2026-03-28': [{ tipo:'info', icono:'🕯️', titulo:'Sábado de Pasión', texto:'Hoy salen San José Obrero (16:55), Divino Perdón (18:00) y Jesús Cautivo de Torreblanca (18:30).', fuente:'Programa Oficial 2026' }],
+  '2026-03-29': [{ tipo:'procesion', icono:'🌿', titulo:'Domingo de Ramos · 9 hermandades', texto:'La Paz (13:00) · La Hiniesta (13:45) · La Cena (14:00) · La Borriquita (14:15) · Jesús Despojado (14:20) · San Roque (16:00) · La Estrella (16:30) · La Amargura (19:00) · El Amor (20:15).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-03-30': [{ tipo:'info', icono:'🕯️', titulo:'Lunes Santo · 9 hermandades', texto:'El Cautivo (11:15) · Santa Genoveva (12:25) · El Beso de Judas (14:45) · San Gonzalo (15:00) · Santa Marta (18:10) · Las Aguas (18:15) · Vera Cruz (19:35) · Las Penas de San Vicente (20:00) · El Museo (20:40).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-03-31': [{ tipo:'info', icono:'🕯️', titulo:'Martes Santo · 8 hermandades', texto:'El Cerro (11:40) · San Esteban (14:40) · La Candelaria (15:30) · San Benito (16:00) · La Universidad (18:30) · Dulce Nombre / Los Estudiantes (19:22) · Las Almas (19:50) · Santa Cruz (20:05).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-04-01': [{ tipo:'info', icono:'🕯️', titulo:'Miércoles Santo · 9 hermandades', texto:'La Sed (12:00) · San Bernardo (14:15) · El Carmen Doloroso (14:45) · El Buen Fin (15:00) · El Baratillo (17:10) · La Lanzada (17:50) · Cristo de Burgos (19:25) · Los Panaderos (19:45) · Las Siete Palabras (20:50).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-04-02': [{ tipo:'info', icono:'🕯️', titulo:'Jueves Santo · 7 hermandades', texto:'Los Negritos (15:00) · La Exaltación (15:20) · Las Cigarreras (17:00) · Montesión (17:30) · El Valle (19:30) · Quinta Angustia (19:36) · La Pasión (20:20).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-04-03': [{ tipo:'danger', icono:'🌟', titulo:'LA MADRUGÁ · Noche más importante', texto:'La Macarena (00:00) · El Gran Poder (00:35) · El Silencio (00:45) · Esperanza de Triana (01:19) · El Calvario (04:05). Tarde: La Sagrada Mortaja (02:30) · El Cachorro (15:35) · La Carretería (16:40) · La Soledad S. Buenaventura (17:50) · La O (18:00) · San Isidoro (19:40) · Montserrat (20:30).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-04-04': [{ tipo:'info', icono:'⚰️', titulo:'Sábado Santo · 5 hermandades', texto:'El Sol (12:45) · La Trinidad (15:05) · Los Servitas (15:15) · Santo Entierro Grande (18:45) · La Soledad de San Lorenzo (18:50).', fuente:'Programa Oficial · Carrera Oficial' }],
+  '2026-04-05': [{ tipo:'ok', icono:'✝️', titulo:'Domingo de Resurrección', texto:'La Resurrección sale a las 08:15 h desde Pq. Santa Marina y San Juan Bautista de La Salle.', fuente:'Programa Oficial · Carrera Oficial' }],
+};
+
+function renderAgendaItems(items, filtroHoy) {
+  const now = new Date();
+  const hoy = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const sorted = [...items].sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+  const futuros = sorted.filter(a => new Date(a.fecha) >= hoy);
+  const pasados = sorted.filter(a => new Date(a.fecha) < hoy);
+  const renderItem = a => {
+    const d = new Date(a.fecha + 'T12:00:00');
+    const esHoy = d.toDateString() === now.toDateString();
+    const mes = d.toLocaleDateString('es-ES',{month:'short'}).replace('.','').toUpperCase();
+    const tipo = a.tipo || 'procesion';
+    return `<div class="agenda-item" style="${esHoy ? 'border-left:3px solid var(--gold);background:rgba(201,168,76,0.05);' : ''}">
+      <div class="agenda-date">
+        <span class="agenda-day">${d.getDate()}</span>
+        <span class="agenda-month">${mes}</span>
+      </div>
+      <div class="agenda-body">
+        <span class="agenda-tipo ${tipo}">${TIPO_LABELS[tipo]||tipo}</span>
+        <div class="agenda-nombre">${a.nombre}</div>
+        <div class="agenda-lugar">${a.lugar||''}</div>
+        <div class="agenda-hora">${a.hora||''}</div>
+      </div>
+    </div>`;
+  };
+  let html = '';
+  if (futuros.length) {
+    html += futuros.map(renderItem).join('');
+  } else {
+    html += '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">La Semana Santa 2026 ha concluido. ¡Hasta el año que viene!</div>';
+  }
+  if (pasados.length) {
+    html += `<div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;padding:12px 0 6px;border-top:1px solid rgba(201,168,76,0.15);margin-top:8px;">Actos pasados</div>`;
+    html += pasados.reverse().map(renderItem).join('');
+  }
+  document.getElementById('agenda-list').innerHTML = html;
+}
+
+function setUpdatedTime(section) {
+  const now = new Date();
+  const txt = 'Actualizado: ' + now.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'}) + ' · ' + now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) + ' h';
+  const el = document.getElementById(section + '-updated');
+  if (el) el.textContent = txt;
+}
+
+function cargarAgenda() {
+  renderAgendaItems(AGENDA_COMPLETA);
+  setUpdatedTime('agenda');
+}
+
+async function cargarAlertas(forzar) {
+  const container = document.getElementById('alertas-container');
+  const btn = document.getElementById('alertas-refresh-btn');
+  if (btn) { btn.textContent = '↻ Actualizando...'; btn.disabled = true; }
+
+  const now = new Date();
+  const fechaHoy = now.toISOString().slice(0,10);
+  let alertas = [];
+
+  // 1. Alerta de jornada de hoy
+  if (ALERTAS_JORNADA[fechaHoy]) {
+    alertas = alertas.concat(ALERTAS_JORNADA[fechaHoy]);
+  } else {
+    // Buscar próxima jornada
+    const fechas = Object.keys(ALERTAS_JORNADA).sort();
+    const proxima = fechas.find(f => f > fechaHoy);
+    if (proxima) {
+      const dias = Math.round((new Date(proxima) - now) / (1000*60*60*24));
+      const jornada = ALERTAS_JORNADA[proxima][0].titulo;
+      alertas.push({ tipo:'info', icono:'📅', titulo:`Próxima jornada: ${jornada}`, texto:`Faltan ${dias} día${dias!==1?'s':''} para ${jornada} (${new Date(proxima+'T12:00:00').toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'})}).`, fuente:'Semana Santa Sevilla 2026' });
+    } else if (fechaHoy > '2026-04-05') {
+      alertas.push({ tipo:'ok', icono:'✅', titulo:'Semana Santa 2026 finalizada', texto:'La Semana Santa de Sevilla 2026 ha concluido. Hasta la Cuaresma de 2027.', fuente:'Consejo General de Hermandades y Cofradías' });
+    } else {
+      alertas.push({ tipo:'info', icono:'🕯️', titulo:'Semana Santa Sevilla 2026', texto:'Las procesiones comienzan el 27 de marzo. Consulta el itinerario para ver las hermandades de cada jornada.', fuente:'Programa Oficial 2026' });
+    }
+  }
+
+  // 2. Alertas meteorológicas en tiempo real via Open-Meteo
+  try {
+    const wx = await fetch('https://api.open-meteo.com/v1/forecast?latitude=37.3886&longitude=-5.9823&current=temperature_2m,weathercode,precipitation_probability,wind_speed_10m&hourly=precipitation_probability&timezone=Europe/Madrid&forecast_days=1');
+    const wxData = await wx.json();
+    const cur = wxData.current;
+    const prob = cur.precipitation_probability || 0;
+    const temp = Math.round(cur.temperature_2m);
+    const viento = Math.round(cur.wind_speed_10m);
+    const code = cur.weathercode;
+
+    // Alerta según condiciones
+    if (prob >= 70 || code >= 61) {
+      alertas.unshift({ tipo:'danger', icono:'🌧️', titulo:`Lluvia probable hoy · ${prob}%`, texto:`Temperatura: ${temp}°C · Viento: ${viento} km/h. Riesgo alto de lluvia. Las hermandades podrían tomar medidas. Consulta el Consejo de Hermandades.`, fuente:'Open-Meteo · AEMET · Actualizado ahora' });
+    } else if (prob >= 35 || (code >= 51 && code < 61)) {
+      alertas.unshift({ tipo:'warning', icono:'🌦️', titulo:`Lluvia posible hoy · ${prob}%`, texto:`Temperatura: ${temp}°C · Viento: ${viento} km/h. Precaución: posibles chubascos. Se recomienda llevar capa.`, fuente:'Open-Meteo · AEMET · Actualizado ahora' });
+    } else if (viento > 40) {
+      alertas.unshift({ tipo:'warning', icono:'💨', titulo:`Viento fuerte · ${viento} km/h`, texto:`Temperatura: ${temp}°C · Lluvia: ${prob}%. Viento fuerte que puede afectar a los pasos. Pendiente comunicado del Consejo.`, fuente:'Open-Meteo · Actualizado ahora' });
+    } else {
+      alertas.push({ tipo:'ok', icono:'☀️', titulo:`Buen tiempo · ${temp}°C`, texto:`Lluvia: ${prob}% · Viento: ${viento} km/h. Condiciones favorables para las procesiones.`, fuente:'Open-Meteo · AEMET · Actualizado ahora' });
+    }
+  } catch(e) {
+    alertas.push({ tipo:'info', icono:'🌡️', titulo:'Tiempo no disponible', texto:'No se pudo obtener la previsión meteorológica. Consulta AEMET o Meteored.', fuente:'Sin conexión al servicio meteorológico' });
+  }
+
+  // 3. Alerta general de estado
+  alertas.push({ tipo:'info', icono:'ℹ️', titulo:'Estado de hermandades', texto:'Para suspensiones o cambios oficiales consulta el Consejo General de Hermandades y Cofradías de Sevilla (consejohermandades.es) o su Twitter @hermandadessev.', fuente:'Consejo Hermandades Sevilla' });
+
+  // Render
+  container.innerHTML = alertas.map(a => {
+    const icon = a.icono || (a.tipo==='danger'?'🚨':a.tipo==='ok'?'✅':a.tipo==='warning'?'⚠️':'ℹ️');
+    return `<div class="alerta-banner ${a.tipo==='procesion'?'info':a.tipo}">
+      <div class="alerta-icon">${icon}</div>
+      <div class="alerta-body">
+        <div class="alerta-title">${a.titulo}</div>
+        <div class="alerta-text">${a.texto}</div>
+        ${a.fuente ? `<div class="alerta-time">${a.fuente}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  setUpdatedTime('alertas');
+  if (btn) { btn.textContent = '↻ Actualizar'; btn.disabled = false; }
+}
+
+// Cargar al inicio
+cargarAgenda();
+cargarAlertas(false);
+
+// Agenda: se refresca 1 vez al día (a medianoche detecta cambio de día)
+setInterval(cargarAgenda, 24 * 60 * 60 * 1000);
+
+// Alertas meteorológicas: cada 30 minutos
+setInterval(() => cargarAlertas(false), 30 * 60 * 1000);
+
+// ── TIEMPO AUTO-ACTUALIZACIÓN ────────────────────────────
+const WX_LAT = 37.3886, WX_LON = -5.9823; // Sevilla
+
+const wxCodeMap = {
+  0:  ['☀️','Despejado'],
+  1:  ['🌤️','Poco nublado'],  2: ['⛅','Parcialmente nublado'], 3: ['☁️','Cubierto'],
+  45: ['🌫️','Niebla'],        48: ['🌫️','Niebla con escarcha'],
+  51: ['🌦️','Llovizna débil'], 53: ['🌦️','Llovizna'], 55: ['🌧️','Llovizna intensa'],
+  61: ['🌧️','Lluvia débil'],   63: ['🌧️','Lluvia'], 65: ['🌧️','Lluvia intensa'],
+  71: ['🌨️','Nieve débil'],   73: ['🌨️','Nieve'], 75: ['❄️','Nieve intensa'],
+  80: ['🌦️','Chubascos'],     81: ['🌧️','Chubascos mod.'], 82: ['⛈️','Chubascos fuertes'],
+  95: ['⛈️','Tormenta'],      96: ['⛈️','Tormenta granizo'], 99: ['⛈️','Tormenta fuerte'],
+};
+
+function wxIcon(code) { return (wxCodeMap[code] || ['🌡️','Desconocido'])[0]; }
+function wxDesc(code) { return (wxCodeMap[code] || ['🌡️','Desconocido'])[1]; }
+
+function wxRiskBadge(prob) {
+  if (prob >= 60) return '<span class="riesgo-badge riesgo-alto">Lluvia ' + prob + '%</span>';
+  if (prob >= 30) return '<span class="riesgo-badge riesgo-medio">Precaución ' + prob + '%</span>';
+  return '<span class="riesgo-badge riesgo-bajo">Despejado ' + prob + '%</span>';
+}
+
+const jornadaFechas = [
+  { dia:'D.Ram 29', fecha:'2026-03-29', nombre:'Domingo de Ramos · 9 hdades.' },
+  { dia:'Lun 30',   fecha:'2026-03-30', nombre:'Lunes Santo · 11 hdades.' },
+  { dia:'Mar 31',   fecha:'2026-03-31', nombre:'Martes Santo · 8 hdades.' },
+  { dia:'Mié 1',    fecha:'2026-04-01', nombre:'Miércoles Santo · 9 hdades.' },
+  { dia:'Jue 2',    fecha:'2026-04-02', nombre:'Jueves Santo · 7 hdades.' },
+  { dia:'Vie 3',    fecha:'2026-04-03', nombre:'Viernes Santo · 7 hdades.' },
+  { dia:'Sáb 4',    fecha:'2026-04-04', nombre:'Sábado Santo · 5 hdades.' },
+  { dia:'D.Res 5',  fecha:'2026-04-05', nombre:'Domingo Resurrección · 1 hdad.' },
+];
+
+function actualizarTiempo() {
+  const url = 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=' + WX_LAT + '&longitude=' + WX_LON
+    + '&current=temperature_2m,weathercode,precipitation_probability'
+    + '&daily=weathercode,temperature_2m_max,precipitation_probability_max'
+    + '&timezone=Europe%2FMadrid'
+    + '&start_date=2026-03-29&end_date=2026-04-05';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      // Current
+      var cur = data.current;
+      var code = cur.weathercode;
+      var temp = Math.round(cur.temperature_2m);
+      document.getElementById('wx-icon-big').textContent = wxIcon(code);
+      document.getElementById('wx-temp').textContent = temp + '°';
+      document.getElementById('wx-desc').textContent = wxDesc(code) + ' · Sevilla';
+      var now = new Date();
+      document.getElementById('wx-updated').textContent = 'Actualizado: '
+        + now.toLocaleDateString('es-ES', {weekday:'short', day:'numeric', month:'short'})
+        + ' ' + now.toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'}) + ' h';
+
+      // Forecast grid
+      var daily = data.daily;
+      var grid = document.getElementById('wx-forecast-grid');
+      if (grid && daily) {
+        grid.innerHTML = daily.time.map(function(fecha, i) {
+          var jornada = jornadaFechas.find(function(j) { return j.fecha === fecha; });
+          var label = jornada ? jornada.dia : fecha.slice(5);
+          return '<div class="forecast-day">'
+            + '<span class="fc-dia">' + label + '</span>'
+            + '<span class="fc-icon">' + wxIcon(daily.weathercode[i]) + '</span>'
+            + '<span class="fc-temp">' + Math.round(daily.temperature_2m_max[i]) + '°</span>'
+            + '<span class="fc-lluvia">' + daily.precipitation_probability_max[i] + '%</span>'
+            + '</div>';
+        }).join('');
+      }
+
+      // Riesgo por jornada
+      var riesgoList = document.getElementById('wx-riesgo-list');
+      if (riesgoList && daily) {
+        riesgoList.innerHTML = jornadaFechas.map(function(j) {
+          var idx = daily.time.indexOf(j.fecha);
+          if (idx === -1) return '';
+          var prob = daily.precipitation_probability_max[idx] || 0;
+          var badge = wxRiskBadge(prob);
+          var extra = j.fecha === '2026-04-03' ? ' ☀️' : '';
+          return '<div class="riesgo-item">'
+            + '<div class="riesgo-hora">' + j.dia + '</div>'
+            + '<div class="riesgo-nombre">' + j.nombre + extra + '</div>'
+            + badge + '</div>';
+        }).join('');
+      }
+    })
+    .catch(function() {
+      document.getElementById('wx-updated').textContent = 'Sin conexión — datos estimados';
+    });
+}
+
+// Run now and every hour
+actualizarTiempo();
+setInterval(actualizarTiempo, 60 * 60 * 1000);
+
+// ── CERCA ────────────────────────────────────────────────
+const ubicacionesCofradias = [
+  { nombre:'La Esperanza Macarena', lat:37.3975, lng:-5.9942, hora:'00:00', zona:'Macarena', status:'pendiente' },
+  { nombre:'El Gran Poder', lat:37.3937, lng:-5.9973, hora:'01:00', zona:'San Lorenzo', status:'pendiente' },
+  { nombre:'La Amargura', lat:37.3956, lng:-5.9911, hora:'18:00', zona:'San Juan de la Palma', status:'pendiente' },
+  { nombre:'La Hiniesta', lat:37.3966, lng:-5.9934, hora:'13:45', zona:'Santa Marina', status:'pendiente' },
+  { nombre:'El Cachorro', lat:37.3854, lng:-6.0025, hora:'15:35', zona:'Triana', status:'pendiente' },
+  { nombre:'La Esperanza de Triana', lat:37.3863, lng:-6.0021, hora:'01:35', zona:'Capilla Marineros', status:'pendiente' },
+  { nombre:'El Silencio', lat:37.3929, lng:-5.9922, hora:'01:00', zona:'San Andrés', status:'pendiente' },
+  { nombre:'La Borriquita', lat:37.3853, lng:-6.0024, hora:'14:30', zona:'Triana', status:'pendiente' },
+  { nombre:'La Exaltación', lat:37.3919, lng:-5.9904, hora:'15:20', zona:'San Leandro', status:'pendiente' },
+  { nombre:'El Valle', lat:37.3832, lng:-5.9967, hora:'19:30', zona:'Los Remedios', status:'pendiente' },
+];
+
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLng = (lng2-lng1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function buscarCerca() {
+  const el = document.getElementById('cerca-results');
+  el.innerHTML = '<div class="cerca-placeholder">Detectando ubicación…</div>';
+  if (!navigator.geolocation) {
+    el.innerHTML = '<div class="cerca-placeholder">Tu navegador no soporta geolocalización.</div>';
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+    const withDist = ubicacionesCofradias.map(function(c) {
+      return Object.assign({}, c, { dist: haversine(lat, lng, c.lat, c.lng) });
+    }).sort(function(a,b) { return a.dist - b.dist; });
+    el.innerHTML = '<p style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">📍 Posición detectada · Las ' + Math.min(5,withDist.length) + ' más cercanas</p>' +
+      withDist.slice(0,5).map(function(c) {
+        const distStr = c.dist < 1000 ? Math.round(c.dist) + ' m' : (c.dist/1000).toFixed(1) + ' km';
+        return '<div class="cerca-result">' +
+          '<div class="cerca-dist">A ' + distStr + '</div>' +
+          '<div class="cerca-nombre">' + c.nombre + '</div>' +
+          '<div class="cerca-info">Zona: ' + c.zona + ' · Salida: ' + c.hora + ' h</div>' +
+          '<span class="cerca-badge ' + c.status + '">' + (c.status === 'en-calle' ? 'En calle' : 'Pendiente') + '</span>' +
+          '</div>';
+      }).join('');
+  }, function() {
+    el.innerHTML = '<div class="cerca-placeholder">No se pudo obtener la ubicación. Comprueba los permisos del navegador.</div>';
+  });
+}
+</script>
+</body>
+</html>
