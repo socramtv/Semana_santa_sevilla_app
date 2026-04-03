@@ -1,0 +1,36 @@
+{
+  "name": "Cruz de Guía 2026 · Semana Santa Sevilla",
+  "short_name": "Cruz de Guía",
+  "description": "Guía completa de la Semana Santa de Sevilla 2026. Itinerario, mapas, radio, música, podcasts y más.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#3D0D17",
+  "theme_color": "#3D0D17",
+  "lang": "es",
+  "categories": ["lifestyle", "navigation", "entertainment"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Itinerario",
+      "short_name": "Itinerario",
+      "description": "Ver el itinerario de cofradías",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
